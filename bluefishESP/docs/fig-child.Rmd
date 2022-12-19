@@ -1,0 +1,24 @@
+
+```{r, fig.cap = fig_info$alt_text[i]}
+dat <- params$data %>%
+  dplyr::full_join(order) %>%
+  dplyr::filter(figure_number == i) %>%
+  dplyr::select(-INDICATOR_NAME) %>%
+  dplyr::rename(INDICATOR_NAME = facet_label)
+
+myear <- ifelse(min(dat$YEAR) < 1985, 1985, min(dat$YEAR))
+
+
+if(nrow(dat > 0)) {
+  dat %>%
+  esp_traffic_fig(status = FALSE,
+                  min_year = myear) 
+}
+```
+
+
+#### Figure `r i`. `r fig_info$caption[i]` {-}
+
+```{r}
+i <- i + 1
+```

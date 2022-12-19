@@ -1,0 +1,15 @@
+
+
+```{r, fig.height = fheight}
+print(plt)
+cat("\n\n")
+```
+
+
+##### Figure `r i`. `r fig_info$caption[i]` {-}
+
+```{r}
+i <- i + 1
+```
+
+\newpage

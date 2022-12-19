@@ -1,0 +1,722 @@
+-\|/-\|/-\Loading required package: nlme
+|This is mgcv 1.8-33. For overview type 'help("mgcv-package")'.
+/-\|/-\[32mv[39m skip target bluefish_nmfs
+|[32mv[39m skip target trip_files
+/[32mv[39m skip target comm_file
+-[32mv[39m skip target condition
+\[32mv[39m skip target effort_rds
+|[32mv[39m skip target wind_indicators_u_nc
+/[32mv[39m skip target temp_indicators
+-[32mv[39m skip target mako_file
+\[32mv[39m skip target nmfs_file
+|[32mv[39m skip target wind_indicators_v_nc
+/[32mv[39m skip target catch_rds
+-[32mv[39m skip target jtemp_indicator
+\[32mv[39m skip target community_file
+|[32mv[39m skip target bluefish_trips
+/[32mv[39m skip target comm_indicators
+-[32mv[39m skip target mrip_effort
+\[32mv[39m skip target n_18_day
+|[32mv[39m skip target last_18_day
+/[32mv[39m skip target first_18_day
+-[32mv[39m skip target mako
+\[32mv[39m skip target bottom_trawl
+|[32mv[39m skip target wind_indicators
+/[32mv[39m skip target mrip_catch
+-[32mv[39m skip target july_proportion
+\[32mv[39m skip target community_indicators
+|[32mv[39m skip target prop_bluefish_trips
+/[32mv[39m skip target rec_catch
+-[32mv[39m skip target rec_landings
+\[32mv[39m skip target test
+|/[34m*[39m start target indicator_report
+-Error in esp_traffic_fig() : argument "data" is missing, with no default
+\Error in stringr::str_detect(x, "condition") : 
+  argument "x" is missing, with no default
+|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|Joining, by = "MONTH"
+/Joining, by = "MONTH"
+-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\Joining, by = "MONTH"
+|Joining, by = "MONTH"
+/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/Joining, by = c("MONTH", "size_group")
+-Joining, by = c("MONTH", "size_group")
+\Joining, by = "MONTH"
+|/-\Joining, by = c("st_f", "wave_f")
+|Joining, by = c("st_f", "wave_f")
+/-\|/-\|/-\|/i Loading bluefishLifeHistory
+-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-- Attaching packages --------------------------------------- tidyverse 1.3.0 --
+-v ggplot2 3.3.6     v purrr   0.3.4
+v tibble  3.1.7     v dplyr   1.0.9
+v tidyr   1.2.0     v stringr 1.4.0
+v readr   1.4.0     v forcats 0.5.1
+\|-- Conflicts ------------------------------------------ tidyverse_conflicts() --
+x dplyr::collapse() masks nlme::collapse()
+x dplyr::combine()  masks gridExtra::combine()
+x dplyr::filter()   masks stats::filter()
+x dplyr::lag()      masks stats::lag()
+/
+Attaching package: 'kableExtra'
+
+-The following object is masked from 'package:dplyr':
+
+    group_rows
+
+\|/-\Adding missing grouping variables: `length_bin`
+|/-\|/-Joining, by = c("Month", "State")
+\Joining, by = c("Month", "State")
+|/-\|/-\|/-\|/-\|/-\|/-\|/-\although coordinates are longitude/latitude, st_union assumes that they are planar
+|/-\|/although coordinates are longitude/latitude, st_intersection assumes that they are planar
+-\|/-\|/-\|Joining, by = c("CATEGORY", "INDICATOR_TYPE", "INDICATOR_NAME")
+/-`geom_smooth()` using formula 'y ~ x'
+\`geom_smooth()` using formula 'y ~ x'
+|/-\Joining, by = c("CATEGORY", "INDICATOR_TYPE", "INDICATOR_NAME")
+|/`geom_smooth()` using formula 'y ~ x'
+-`geom_smooth()` using formula 'y ~ x'
+\|/Joining, by = c("CATEGORY", "INDICATOR_TYPE", "INDICATOR_NAME")
+-\|/Joining, by = c("CATEGORY", "INDICATOR_TYPE", "INDICATOR_NAME")
+-`geom_smooth()` using formula 'y ~ x'
+\`geom_smooth()` using formula 'y ~ x'
+|/-\|Joining, by = c("CATEGORY", "INDICATOR_TYPE", "INDICATOR_NAME")
+/`geom_smooth()` using formula 'y ~ x'
+-`geom_smooth()` using formula 'y ~ x'
+\|/-\|Joining, by = c("CATEGORY", "INDICATOR_TYPE", "INDICATOR_NAME")
+/-`geom_smooth()` using formula 'y ~ x'
+\`geom_smooth()` using formula 'y ~ x'
+|/-\Joining, by = c("CATEGORY", "INDICATOR_TYPE", "INDICATOR_NAME")
+|/-\|Joining, by = c("CATEGORY", "INDICATOR_TYPE", "INDICATOR_NAME")
+/-\|Joining, by = c("CATEGORY", "INDICATOR_TYPE", "INDICATOR_NAME")
+/-\|/-\|/-\|/-\|
+-\|/-\|/-\|Loading required package: nlme
+/This is mgcv 1.8-33. For overview type 'help("mgcv-package")'.
+-\|/-\|/-\ -\|/-\|/-\Loading required package: nlme
+|This is mgcv 1.8-33. For overview type 'help("mgcv-package")'.
+/-\|/-\[32mv[39m skip target bluefish_nmfs
+|[32mv[39m skip target trip_files
+/[32mv[39m skip target comm_file
+-[32mv[39m skip target condition
+\[32mv[39m skip target effort_rds
+|[32mv[39m skip target wind_indicators_u_nc
+/[32mv[39m skip target temp_indicators
+-[32mv[39m skip target mako_file
+\[32mv[39m skip target nmfs_file
+|[32mv[39m skip target wind_indicators_v_nc
+/[32mv[39m skip target catch_rds
+-[32mv[39m skip target jtemp_indicator
+\[32mv[39m skip target community_file
+|[32mv[39m skip target bluefish_trips
+/[32mv[39m skip target comm_indicators
+-[32mv[39m skip target mrip_effort
+\[32mv[39m skip target n_18_day
+|[32mv[39m skip target last_18_day
+/[32mv[39m skip target first_18_day
+-[32mv[39m skip target mako
+\[32mv[39m skip target bottom_trawl
+|[32mv[39m skip target wind_indicators
+/[32mv[39m skip target mrip_catch
+-[32mv[39m skip target july_proportion
+\[32mv[39m skip target community_indicators
+|[32mv[39m skip target prop_bluefish_trips
+/[32mv[39m skip target rec_catch
+-[32mv[39m skip target rec_landings
+\[32mv[39m skip target test
+|[34m*[39m start target indicator_report
+/Error in esp_traffic_fig() : argument "data" is missing, with no default
+-Error in stringr::str_detect(x, "condition") : 
+  argument "x" is missing, with no default
+\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/Joining, by = "MONTH"
+-Joining, by = "MONTH"
+\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\Joining, by = "MONTH"
+|Joining, by = "MONTH"
+/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/Joining, by = c("MONTH", "size_group")
+-Joining, by = c("MONTH", "size_group")
+\Joining, by = "MONTH"
+|/-\Joining, by = c("st_f", "wave_f")
+|Joining, by = c("st_f", "wave_f")
+/-\|/-\|/-\|i Loading bluefishLifeHistory
+/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-- Attaching packages --------------------------------------- tidyverse 1.3.0 --
+-v ggplot2 3.3.6     v purrr   0.3.4
+v tibble  3.1.7     v dplyr   1.0.9
+v tidyr   1.2.0     v stringr 1.4.0
+v readr   1.4.0     v forcats 0.5.1
+\|-- Conflicts ------------------------------------------ tidyverse_conflicts() --
+x dplyr::collapse() masks nlme::collapse()
+x dplyr::combine()  masks gridExtra::combine()
+x dplyr::filter()   masks stats::filter()
+x dplyr::lag()      masks stats::lag()
+/
+Attaching package: 'kableExtra'
+
+-The following object is masked from 'package:dplyr':
+
+    group_rows
+
+\|/-\|/Adding missing grouping variables: `length_bin`
+-\|/-\|/-\|/Joining, by = c("Month", "State")
+-Joining, by = c("Month", "State")
+\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\although coordinates are longitude/latitude, st_union assumes that they are planar
+|/-\|/-\|although coordinates are longitude/latitude, st_intersection assumes that they are planar
+/-\|/-\|/-\|/-Joining, by = c("CATEGORY", "INDICATOR_TYPE", "INDICATOR_NAME")
+\|/-\`geom_smooth()` using formula 'y ~ x'
+|`geom_smooth()` using formula 'y ~ x'
+/-\|/Joining, by = c("CATEGORY", "INDICATOR_TYPE", "INDICATOR_NAME")
+-\`geom_smooth()` using formula 'y ~ x'
+|`geom_smooth()` using formula 'y ~ x'
+/-\|/Joining, by = c("CATEGORY", "INDICATOR_TYPE", "INDICATOR_NAME")
+-\|/-\Joining, by = c("CATEGORY", "INDICATOR_TYPE", "INDICATOR_NAME")
+|/`geom_smooth()` using formula 'y ~ x'
+-\`geom_smooth()` using formula 'y ~ x'
+|/-\|/Joining, by = c("CATEGORY", "INDICATOR_TYPE", "INDICATOR_NAME")
+-\`geom_smooth()` using formula 'y ~ x'
+|`geom_smooth()` using formula 'y ~ x'
+/-\|/Joining, by = c("CATEGORY", "INDICATOR_TYPE", "INDICATOR_NAME")
+-\`geom_smooth()` using formula 'y ~ x'
+|/`geom_smooth()` using formula 'y ~ x'
+-\|/-\Joining, by = c("CATEGORY", "INDICATOR_TYPE", "INDICATOR_NAME")
+|/-\|/-\Joining, by = c("CATEGORY", "INDICATOR_TYPE", "INDICATOR_NAME")
+|/-\|/Joining, by = c("CATEGORY", "INDICATOR_TYPE", "INDICATOR_NAME")
+-\|/-\|/-\|/-\[32m*[39m built target indicator_report
+|[34m*[39m end pipeline: 2.744 minutes
+/There were 50 or more warnings (use warnings() to see the first 50)-
+\| # A tibble: 781 x 32
+   length_bin SampleID State  Year Month Source         Program Gear  Area  ForkLengthCM TotalLengthCM WeightKG Sex   Maturity WgtFactor
+        <dbl> <chr>    <fct> <dbl> <dbl> <chr>          <chr>   <chr> <chr>        <dbl>         <dbl>    <dbl> <chr> <chr>        <dbl>
+ 1          7 1999017  NH     1999     7 Fishery Indep~ Juveni~ Seine Hamp~         7.12           8.3       NA <NA>  <NA>            NA
+ 2          5 1999029  NH     1999     7 Fishery Indep~ Juveni~ Seine Pisc~         5.43           6.4       NA <NA>  <NA>            NA
+ 3          9 1999029  NH     1999     7 Fishery Indep~ Juveni~ Seine Pisc~         9.71          11.2       NA <NA>  <NA>            NA
+ 4          8 1999029  NH     1999     7 Fishery Indep~ Juveni~ Seine Pisc~         8.28           9.6       NA <NA>  <NA>            NA
+ 5          8 1999029  NH     1999     7 Fishery Indep~ Juveni~ Seine Pisc~         8.91          10.3       NA <NA>  <NA>            NA
+ 6          6 1999033  NH     1999     8 Fishery Indep~ Juveni~ Seine Litt~         6.41           7.5       NA <NA>  <NA>            NA
+ 7          6 1999033  NH     1999     8 Fishery Indep~ Juveni~ Seine Litt~         6.85           8         NA <NA>  <NA>            NA
+ 8          6 1999033  NH     1999     8 Fishery Indep~ Juveni~ Seine Litt~         6.85           8         NA <NA>  <NA>            NA
+ 9          7 1999046  NH     1999     9 Fishery Indep~ Juveni~ Seine Pisc~         7.84           9.1       NA <NA>  <NA>            NA
+10          9 1999046  NH     1999     9 Fishery Indep~ Juveni~ Seine Pisc~         9.98          11.5       NA <NA>  <NA>            NA
+# ... with 771 more rows, and 17 more variables: DataSource <chr>, Station <chr>, Fork.Length <dbl>, Total.Length <dbl>,
+#   Histo.Maturity <chr>, Age <dbl>, AgeType <chr>, Semester <fct>, Geo <chr>, Decade <dbl>, Cohort <dbl>, CohortDecade <fct>,
+#   MaturityBin <chr>, MaturityStage <chr>, UCL <dbl>, AgeBump <lgl>, FLImputed <lgl>
+# A tibble: 5 x 5
+# Groups:   Month [5]
+  Month State n_fish n_years fish 
+  <dbl> <fct>  <int>   <int> <chr>
+1     6 NH        24       1 no   
+2     7 NH       129       3 yes  
+3     8 NH       186       4 yes  
+4     9 NH       123       3 yes  
+5    10 NH        35       1 no   
+# A tibble: 6 x 25
+# Groups:   Month, Program, State [1]
+  SampleID   State  Year Month Source Program Area  ForkLengthCM WeightKG Sex   Maturity DataSource Station   Age AgeType Semester Geo  
+  <chr>      <fct> <dbl> <dbl> <chr>  <chr>   <chr>        <dbl>    <dbl> <chr> <chr>    <chr>      <chr>   <dbl> <chr>   <fct>    <chr>
+1 NM2007090~ NC     2007    10 Fishe~ NEAMAP  Coas~         23      0.136 Fema~ Immature VA         NM2007~     0 Otolith 2        South
+2 NM2007090~ NC     2007    10 Fishe~ NEAMAP  Coas~         26.8    0.232 Male  Immature VA         NM2007~     0 Otolith 2        South
+3 NM2007090~ NC     2007    10 Fishe~ NEAMAP  Coas~         20.8    0.122 Male  Immature VA         NM2007~     0 Otolith 2        South
+4 NM2007090~ NC     2007    10 Fishe~ NEAMAP  Coas~         22.8    0.15  Fema~ Immature VA         NM2007~     0 Otolith 2        South
+5 NM2007090~ NC     2007    10 Fishe~ NEAMAP  Coas~         21.4    0.136 Male  Immature VA         NM2007~     0 Otolith 2        South
+6 NM2007090~ NC     2007    10 Fishe~ NEAMAP  Coas~         19      0.086 Fema~ Immature VA         NM2007~     0 Otolith 2        South
+# ... with 8 more variables: Decade <dbl>, Cohort <dbl>, CohortDecade <fct>, MaturityBin <chr>, n_data <int>, n_fish <int>,
+#   n_years <int>, fish <chr>
+ages   = { 520-537 },
+        volume  = { 124 }
+      }
+@article{ ABUNDANCE,
+        author  = { Howell, P and Simpson, D },
+        title   = { Abundance of marine resources in relation to dissolved-oxygen in long-island sound },
+        journal = { Estuaries },
+        year    = { 1994 },
+        number  = { 2 },
+        pages   = { 394-402 },
+        volume  = { 17 }
+      }
+@article{ ACCELERATI,
+        author  = { Juanes, F and Buckel, Ja and Conover, Do },
+        title   = { Accelerating the onset of piscivory - intersection of predator and prey phenologies },
+        journal = { Journal Of Fish Biology },
+        year    = { 1994 },
+        number  = {  },
+        pages   = { 41-54 },
+        volume  = { 45 }
+      }
+@article{ Predatory,
+        author  = { Juanes, F and Buckel, Ja and Scharf, Fs },
+        title   = { Predatory behaviour and selectivity of a primary piscivore: comparison of fish and non-fish prey },
+        journal = { Marine Ecology Progress Series },
+        year    = { 2001 },
+        number  = {  },
+        pages   = { 157-165 },
+        volume  = { 217 }
+      }
+@article{ Fall_and_w,
+        author  = { Juanes, F and Clarke, Pj and Murt, J },
+        title   = { Fall and winter estuarine recruitment of bluefish Pomatomus saltatrix: selectivity for large lipid-rich prey increases depleted energy levels },
+        journal = { Marine Ecology Progress Series },
+        year    = { 2013 },
+        number  = {  },
+        pages   = { 235-252 },
+        volume  = { 492 }
+      }
+@article{ PISCIVORY,
+        author  = { Juanes, F and Conover, Do },
+        title   = { Piscivory and prey size selection in young-of-the-year bluefish - predator preference or size-dependent capture success },
+        journal = { Marine Ecology Progress Series },
+        year    = { 1994 },
+        number  = { 1-2 },
+        pages   = { 59-69 },
+        volume  = { 114 }
+      }
+@article{ RAPID_GROW,
+        author  = { Juanes, F and Conover, Do },
+        title   = { Rapid growth, high feeding rates, and early piscivory in young-of-the-year bluefish (pomatomus saltatrix) },
+        journal = { Canadian Journal Of Fisheries And Aquatic Sciences },
+        year    = { 1994 },
+        number  = { 8 },
+        pages   = { 1752-1761 },
+        volume  = { 51 }
+      }
+@article{ Size-struc,
+        author  = { Juanes, F and Conover, Do },
+        title   = { Size-structured piscivory: Advection and the linkage between predator and prey recruitment in young-of-the-year bluefish },
+        journal = { Marine Ecology Progress Series },
+        year    = { 1995 },
+        number  = { 1-3 },
+        pages   = { 287-304 },
+        volume  = { 128 }
+      }
+@article{ Dynamics_o,
+        author  = { Manderson, Jp and Pessutti, J and Shaheen, P and Juanes, F },
+        title   = { Dynamics of early juvenile winter flounder predation risk on a North West Atlantic estuarine nursery ground },
+        journal = { Marine Ecology Progress Series },
+        year    = { 2006 },
+        number  = {  },
+        pages   = { 249-265 },
+        volume  = { 328 }
+      }
+@article{ Managing_a,
+        author  = { Mcbride, Rs },
+        title   = { Managing a Marine Stock Portfolio: Stock Identification, Structure, and Management of 25 Fishery Species along the Atlantic Coast of the United States },
+        journal = { North American Journal Of Fisheries Management },
+        year    = { 2014 },
+        number  = { 4 },
+        pages   = { 710-734 },
+        volume  = { 34 }
+      }
+@article{ RECRUITMEN,
+        author  = { Mcbride, Rs and Conover, Do },
+        title   = { Recruitment of young-of-the-year bluefish pomatomus-saltatrix to the new-york bight - variation in abundance and growth of spring-spawned and summer-spawned cohorts },
+        journal = { Marine Ecology Progress Series },
+        year    = { 1991 },
+        number  = { 3 },
+        pages   = { 205-216 },
+        volume  = { 78 }
+      }
+@article{ Effects_of,
+        author  = { Morley, Jw and Buckel, Ja },
+        title   = { Effects of temperature and prey size on predator-prey interactions between bluefish and bay anchovy },
+        journal = { Journal Of Experimental Marine Biology And Ecology },
+        year    = { 2014 },
+        number  = {  },
+        pages   = { 449-457 },
+        volume  = { 461 }
+      }
+@article{ Recruitmen,
+        author  = { Munch, Sb and Conover, Do },
+        title   = { Recruitment dynamics of bluefish (Pomatomus saltatrix) from Cape Hatteras to Cape Cod, 1973-1995 },
+        journal = { Ices Journal Of Marine Science },
+        year    = { 2000 },
+        number  = { 2 },
+        pages   = { 393-402 },
+        volume  = { 57 }
+      }
+@article{ BEHAVIOR_O,
+        author  = { Olla, Bl and Studholme, Al and Bejda, Aj },
+        title   = { Behavior of juvenile bluefish pomatomus-saltatrix in vertical thermal-gradients - influence of season, temperature-acclimation and food },
+        journal = { Marine Ecology Progress Series },
+        year    = { 1985 },
+        number  = { 2 },
+        pages   = { 165-177 },
+        volume  = { 23 }
+      }
+@article{ Age-valida,
+        author  = { Robillard, E and Reiss, Cs and Jones, Cm },
+        title   = { Age-validation and growth of bluefish (Pomatomus saltatrix) along the East Coast of the United States },
+        journal = { Fisheries Research },
+        year    = { 2009 },
+        number  = { 1 },
+        pages   = { 65-75 },
+        volume  = { 95 }
+      }
+@article{ BLUEFISH_M,
+        author  = { Safina, C },
+        title   = { Bluefish mediation of foraging competition between roseate and common terns },
+        journal = { Ecology },
+        year    = { 1990 },
+        number  = { 5 },
+        pages   = { 1804-1809 },
+        volume  = { 71 }
+      }
+@article{ Size-depen,
+        author  = { Scharf, Fs and Buckel, Ja and Juanes, F },
+        title   = { Size-dependent vulnerability of juvenile bay anchovy Anchoa mitchilli to bluefish predation: Does large body size always provide a refuge? },
+        journal = { Marine Ecology Progress Series },
+        year    = { 2002 },
+        number  = {  },
+        pages   = { 241-252 },
+        volume  = { 233 }
+      }
+@article{ Contrastin,
+        author  = { Scharf, Fs and Buckel, Ja and Juanes, F },
+        title   = { Contrasting patterns of resource utilization between juvenile estuarine predators: the influence of relative prey size and foraging ability on the ontogeny of piscivory },
+        journal = { Canadian Journal Of Fisheries And Aquatic Sciences },
+        year    = { 2009 },
+        number  = { 5 },
+        pages   = { 790-801 },
+        volume  = { 66 }
+      }
+@article{ Seasonal_a,
+        author  = { Scharf, Fs and Manderson, Jp and Fabrizio, Mc and Pessutti, Jp and Rosendale, Je and Chant, Rj and Bejda, Aj },
+        title   = { Seasonal and interannual patterns of distribution and diet of bluefish within a middle Atlantic bight estuary in relation to abiotic and biotic factors },
+        journal = { Estuaries },
+        year    = { 2004 },
+        number  = { 3 },
+        pages   = { 426-436 },
+        volume  = { 27 }
+      }
+@article{ The_year-c,
+        author  = { Secor, Dh },
+        title   = { The year-class phenomenon and the storage effect in marine fishes },
+        journal = { Journal Of Sea Research },
+        year    = { 2007 },
+        number  = { 1-3 },
+        pages   = { 91-103 },
+        volume  = { 57 }
+      }
+@article{ SPAWNING_P,
+        author  = { Smith, W and Berrien, P and Potthoff, T },
+        title   = { Spawning patterns of bluefish, pomatomus-saltatrix, in the northeast continental-shelf ecosystem },
+        journal = { Bulletin Of Marine Science },
+        year    = { 1994 },
+        number  = { 1 },
+        pages   = { 16-Aug },
+        volume  = { 54 }
+      }
+@article{ Seasonal_a,
+        author  = { Staudinger, Md },
+        title   = { Seasonal and size-based predation on two species of squid by four fish predators on the Northwest Atlantic continental shelf },
+        journal = { Fishery Bulletin },
+        year    = { 2006 },
+        number  = { 4 },
+        pages   = { 605-615 },
+        volume  = { 104 }
+      }
+@article{ Overwinter,
+        author  = { Stormer, Dg and Juanes, F },
+        title   = { Overwinter Habitat Use, Feeding Habits and Energetics of Juvenile Bluefish in the Northern Florida Coastal Ocean },
+        journal = { Estuaries And Coasts },
+        year    = { 2018 },
+        number  = { 5 },
+        pages   = { 1422-1435 },
+        volume  = { 41 }
+      }
+@article{ Habitat_se,
+        author  = { Taylor, Dl and Nichols, Rs and Able, Kw },
+        title   = { Habitat selection and quality for multiple cohorts of young-of-the-year bluefish (Pomatomus saltatrix): Comparisons between estuarine and ocean beaches in southern New Jersey },
+        journal = { Estuarine Coastal And Shelf Science },
+        year    = { 2007 },
+        number  = { 3-4 },
+        pages   = { 667-679 },
+        volume  = { 73 }
+      }
+@article{ Striped_Ba,
+        author  = { Uphoff, Jh and Sharov, A },
+        title   = { Striped Bass and Atlantic Menhaden Predator-Prey Dynamics: Model Choice Makes the Difference },
+        journal = { Marine And Coastal Fisheries },
+        year    = { 2018 },
+        number  = { 4 },
+        pages   = { 370-385 },
+        volume  = { 10 }
+      }
+@article{ Response_o,
+        author  = { Wilber, Dh and Clarke, Dg and Ray, Gl and Burlas, M },
+        title   = { Response of surf zone fish to beach nourishment operations on the northern coast of New Jersey, USA },
+        journal = { Marine Ecology Progress Series },
+        year    = { 2003 },
+        number  = {  },
+        pages   = { 231-246 },
+        volume  = { 250 }
+      }
+@article{ Difference,
+        author  = { Woodland, Rj and Secor, Dh },
+        title   = { Differences in juvenile trophic niche for two coastal fish species that use marine and estuarine nursery habitats },
+        journal = { Marine Ecology Progress Series },
+        year    = { 2011 },
+        number  = {  },
+        pages   = { 241-290 },
+        volume  = { 439 }
+      }
+@article{ Comparing,
+        author  = { Woodland, Rj and Secor, Dh and Fabrizio, Mc and Wilberg, Mj },
+        title   = { Comparing the nursery role of inner continental shelf and estuarine habitats for temperate marine fishes },
+        journal = { Estuarine Coastal And Shelf Science },
+        year    = { 2012 },
+        number  = {  },
+        pages   = { 61-73 },
+        volume  = { 99 }
+      }
+@article{ Recruitmen,
+        author  = { Wuenschel, Mj and Able, Kw and Buckel, Ja and Morley, Jw and Lankford, T and Branson, Ac and Conover, Do and Drisco, D and Jordaan, A and Dunton, K and Secor, Dh and Woodland, Rj and Juanes, F and Stormer, D },
+        title   = { Recruitment Patterns and Habitat Use of Young-of-the-Year Bluefish along the United States East Coast: Insights from Coordinated Coastwide Sampling },
+        journal = { Reviews In Fisheries Science },
+        year    = { 2012 },
+        number  = { 2 },
+        pages   = { 80-102 },
+        volume  = { 20 }
+      }
+@article{ Near-Surfa,
+        author  = { Able, Kw and Grothues, Tm and Rowe, Pm and Wuenschel, Mj and Vasslides, Jm },
+        title   = { Near-Surface Larval and Juvenile Fish in Coastal Habitats: Comparisons Between the Inner Shelf and an Estuary in the New York Bight During Summer and Fall },
+        journal = { Estuaries And Coasts },
+        year    = { 2011 },
+        number  = { 4 },
+        pages   = { 726-738 },
+        volume  = { 34 }
+      }
+@article{ Morphometr,
+        author  = { Austin, Hm and Scoles, D and Abell, Aj },
+        title   = { Morphometric separation of annual cohorts within mid-Atlantic bluefish, Pomatomus saltatrix, using discriminant function analysis },
+        journal = { Fishery Bulletin },
+        year    = { 1999 },
+        number  = { 3 },
+        pages   = { 411-420 },
+        volume  = { 97 }
+      }
+@article{ AGE_AND_GR,
+        author  = { Barger, Le },
+        title   = { Age and growth of bluefish pomatomus-saltatrix from the northern gulf of mexico and united-states south-atlantic coast },
+        journal = { Fishery Bulletin },
+        year    = { 1990 },
+        number  = { 4 },
+        pages   = { 805-809 },
+        volume  = { 88 }
+      }
+@article{ Effects_of,
+        author  = { Bell, Gw and Buckel, Ja and Stoner, Aw },
+        title   = { Effects of alternative prey on cannibalism in age-1 bluefish },
+        journal = { Journal Of Fish Biology },
+        year    = { 1999 },
+        number  = { 5 },
+        pages   = { 990-1000 },
+        volume  = { 55 }
+      }
+@article{ Impact_of,
+        author  = { Buckel, Ja and Conover, Do and Steinberg, Nd and Mckown, Ka },
+        title   = { Impact of age-0 bluefish (Pomatomus saltatrix) predation on age-0 fishes in the Hudson River estuary: evidence for density-dependent loss of juvenile striped bass (Morone saxatilis) },
+        journal = { Canadian Journal Of Fisheries And Aquatic Sciences },
+        year    = { 1999 },
+        number  = { 2 },
+        pages   = { 275-287 },
+        volume  = { 56 }
+      }
+@article{ Mutual_pre,
+        author  = { Buckel, Ja and Fogarty, Mj and Conover, Do },
+        title   = { Mutual prey of fish and humans: a comparison of biomass consumed by bluefish, Pomatomus saltatrix, with that harvested by fisheries },
+        journal = { Fishery Bulletin },
+        year    = { 1999 },
+        number  = { 4 },
+        pages   = { 776-785 },
+        volume  = { 97 }
+      }
+@article{ Foraging_h,
+        author  = { Buckel, Ja and Fogarty, Mj and Conover, Do },
+        title   = { Foraging habits of bluefish, Pomatomus saltatrix, on the US east coast continental shelf },
+        journal = { Fishery Bulletin },
+        year    = { 1999 },
+        number  = { 4 },
+        pages   = { 758-775 },
+        volume  = { 97 }
+      }
+@article{ Cohort_spl,
+        author  = { Callihan, Jl and Takata, Lt and Woodland, Rj and Secor, Dh },
+        title   = { Cohort splitting in bluefish, Pomatomus saltatrix, in the US mid-Atlantic Bight },
+        journal = { Fisheries Oceanography },
+        year    = { 2008 },
+        number  = { 3 },
+        pages   = { 191-205 },
+        volume  = { 17 }
+      }
+@article{ LARVAL_KIN,
+        author  = { Collins, Mr and Stender, Bw },
+        title   = { Larval king mackerel (scomberomorus-cavalla), spanish mackerel (scomberomorus-maculatus), and bluefish (pomatomus-saltatrix) off the southeast coast of the united-states, 1973-1980 },
+        journal = { Bulletin Of Marine Science },
+        year    = { 1987 },
+        number  = { 3 },
+        pages   = { 822-834 },
+        volume  = { 41 }
+      }
+@article{ Estimating,
+        author  = { Conover, Do and Gilmore, T and Munch, Sb },
+        title   = { Estimating the relative contribution of spring- and summer-spawned cohorts to the Atlantic coast bluefish stock },
+        journal = { Transactions Of The American Fisheries Society },
+        year    = { 2003 },
+        number  = { 6 },
+        pages   = { 1117-1124 },
+        volume  = { 132 }
+      }
+@article{ THE_DISTRI,
+        author  = { Creaser, Ep and Perkins, Hc },
+        title   = { The distribution, food, and age of juvenile bluefish, pomatomus-saltatrix, in maine },
+        journal = { Fishery Bulletin },
+        year    = { 1994 },
+        number  = { 3 },
+        pages   = { 494-508 },
+        volume  = { 92 }
+      }
+@article{ SEASONAL_O,
+        author  = { Ditty, Jg and Shaw, Rf },
+        title   = { Seasonal occurrence, distribution, and abundance of larval bluefish, pomatomus saltatrix (family, pomatomidae), in the northern gulf-of-mexico },
+        journal = { Bulletin Of Marine Science },
+        year    = { 1995 },
+        number  = { 2 },
+        pages   = { 592-601 },
+        volume  = { 56 }
+      }
+@article{ STOCK_STRU,
+        author  = { Graves, Je and Mcdowell, Jr and Beardsley, Am and Scoles, Dr },
+        title   = { Stock structure of the bluefish pomatomus-saltatrix along the mid-atlantic coast },
+        journal = { Fishery Bulletin },
+        year    = { 1992 },
+        number  = { 4 },
+        pages   = { 703-710 },
+        volume  = { 90 }
+      }
+@article{ PREDATORY,
+        author  = { Hartman, Kj and Brandt, Sb },
+        title   = { Predatory demand and impact of striped bass, bluefish, and weakfish in the chesapeake-bay - applications of bioenergetics models },
+        journal = { Canadian Journal Of Fisheries And Aquatic Sciences },
+        year    = { 1995 },
+        number  = { 8 },
+        pages   = { 1667-1687 },
+        volume  = { 52 }
+      }
+@article{ SOURCES_AN,
+        author  = { Kendall, Aw and Walford, La },
+        title   = { Sources and distribution of bluefish, pomatomus-saltatrix, larvae and juveniles off the east coast of the united-states },
+        journal = { Fishery Bulletin },
+        year    = { 1979 },
+        number  = { 1 },
+        pages   = { 213-227 },
+        volume  = { 77 }
+      }
+@article{ ONTOGENIC,
+        author  = { Marks, Re and Conover, Do },
+        title   = { Ontogenic shift in the diet of young-of-year bluefish pomatomus-saltatrix during the oceanic phase of the early life-history },
+        journal = { Fishery Bulletin },
+        year    = { 1993 },
+        number  = { 1 },
+        pages   = { 97-106 },
+        volume  = { 91 }
+      }
+@article{ RECRUITMEN,
+        author  = { Mcbride, Rs and Ross, Jl and Conover, Do },
+        title   = { Recruitment of bluefish pomatomus-saltatrix to estuaries of the united-states south-atlantic bight },
+        journal = { Fishery Bulletin },
+        year    = { 1993 },
+        number  = { 2 },
+        pages   = { 389-395 },
+        volume  = { 91 }
+      }
+@article{ CORRELATED,
+        author  = { Mcbride, Rs and Scherer, Md and Powell, Jc },
+        title   = { Correlated variations in abundance, size, growth, and loss rates of age-o bluefish in a southern new-england estuary },
+        journal = { Transactions Of The American Fisheries Society },
+        year    = { 1995 },
+        number  = { 6 },
+        pages   = { 898-910 },
+        volume  = { 124 }
+      }
+@article{ Relative_c,
+        author  = { Morley, Jw and Buckel, Ja and Lankford, Te },
+        title   = { Relative contribution of spring- and summer-spawned bluefish cohorts to the adult population: effects of size-selective winter mortality, overwinter growth, and sampling bias },
+        journal = { Canadian Journal Of Fisheries And Aquatic Sciences },
+        year    = { 2013 },
+        number  = { 2 },
+        pages   = { 233-244 },
+        volume  = { 70 }
+      }
+@article{ Reproducti,
+        author  = { Robillard, E and Reiss, Cs and Jones, Cm },
+        title   = { Reproductive biology of bluefish (Pomatomus saltatrix) along the East Coast of the United States },
+        journal = { Fisheries Research },
+        year    = { 2008 },
+        number  = { 1-3 },
+        pages   = { 198-208 },
+        volume  = { 90 }
+      }
+@article{ Estimating,
+        author  = { Scharf, Fs and Buckel, Ja and Juanes, F and Conover, Do },
+        title   = { Estimating piscine prey size from partial remains: Testing for shifts in foraging mode by juvenile bluefish },
+        journal = { Environmental Biology Of Fishes },
+        year    = { 1997 },
+        number  = { 3 },
+        pages   = { 377-388 },
+        volume  = { 49 }
+      }
+@article{ Predation,
+        author  = { Scharf, Fs and Buckel, Ja and Juanes, F and Conover, Do },
+        title   = { Predation by juvenile piscivorous bluefish (Pomatomus saltatrix): the influence of prey to predator size ratio and prey type on predator capture success and prey profitability },
+        journal = { Canadian Journal Of Fisheries And Aquatic Sciences },
+        year    = { 1998 },
+        number  = { 7 },
+        pages   = { 1695-1703 },
+        volume  = { 55 }
+      }
+@article{ The_migrat,
+        author  = { Shepherd, Gr and Moser, J and Deuel, D and Carlsen, P },
+        title   = { The migration patterns of bluefish (Pomatomus saltatfix) along the Atlantic coast determined from tag recoveries },
+        journal = { Fishery Bulletin },
+        year    = { 2006 },
+        number  = { 4 },
+        pages   = { 559-570 },
+        volume  = { 104 }
+      }
+@article{ A_comparis,
+        author  = { Sipe, Am and Chittenden, Me },
+        title   = { A comparison of calcified structures for aging bluefish in the Chesapeake Bay region },
+        journal = { Transactions Of The American Fisheries Society },
+        year    = { 2002 },
+        number  = { 4 },
+        pages   = { 783-790 },
+        volume  = { 131 }
+      }
+@article{ Premigrati,
+        author  = { Stormer, Dg and Juanes, F },
+        title   = { Premigration Patterns of Growth, Condition, and Resource Use by the Spring-Spawned and Summer-Spawned Cohorts of Juvenile Bluefish in the Hudson River Estuary, New York },
+        journal = { Marine And Coastal Fisheries },
+        year    = { 2017 },
+        number  = { 1 },
+        pages   = { 549-563 },
+        volume  = { 9 }
+      }
+@article{ Cohort_dyn,
+        author  = { Taylor, Dl and Able, Kw },
+        title   = { Cohort dynamics of summer-spawned bluefish as determined by length-frequency and otolith microstructure analyses },
+        journal = { Transactions Of The American Fisheries Society },
+        year    = { 2006 },
+        number  = { 4 },
+        pages   = { 955-969 },
+        volume  = { 135 }
+      }
+@article{ Recalculat,
+        author  = { Wood, Ad and Wetherbeez, Bm and Juanes, F and Kohler, Ne and Wilga, C },
+        title   = { Recalculated diet and daily ration of the shortfin mako (Isurus oxyrinchus), with a focus on quantifying predation on bluefish (Pomatomus saltatrix) in the northwest Atlantic Ocean },
+        journal = { Fishery Bulletin },
+        year    = { 2009 },
+        number  = { 1 },
+        pages   = { 76-88 },
+        volume  = { 107 }
+      }
+@article{ Trophic_Re,
+        author  = { Woodland, Rj and Secor, Dh and Wedge, Me },
+        title   = { Trophic Resource Overlap Between Small Elasmobranchs and Sympatric Teleosts in Mid-Atlantic Bight Nearshore Habitats },
+        journal = { Estuaries And Coasts },
+        year    = { 2011 },
+        number  = { 2 },
+        pages   = { 391-404 },
+        volume  = { 34 }
+      }

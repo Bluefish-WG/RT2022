@@ -1,0 +1,5 @@
+bluefishESP/data-raw/SMA2017_Bratio*
+bluefishESP/data-raw/2009-2019RecScores_ME_MS_031522cw*
+bluefishESP/data-raw/VAST/*/*/*.RDS
+bluefishESP/data-raw/*.nc
+bluefishESP/.Rproj.user/*

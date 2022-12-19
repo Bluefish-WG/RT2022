@@ -1,0 +1,244 @@
+@article{deuel1966description,
+  title={Description of embryonic and early larval stages of bluefish, Pomatomus saltatrix},
+  author={Deuel, David G and Clark, John R and Mansueti, Alice J},
+  journal={Transactions of the American Fisheries Society},
+  volume={95},
+  number={3},
+  pages={264--271},
+  year={1966},
+  publisher={Taylor \& Francis}
+}
+@article{juanes1996comparing,
+  title={Comparing early life history strategies of Pomatomus saltatrix: a global approach},
+  author={Juanes, Francis and Hare, Jonathan A and Miskiewicz, Anthony G},
+  journal={Marine and freshwater research},
+  volume={47},
+  number={2},
+  pages={365--379},
+  year={1996},
+  publisher={CSIRO Publishing}
+}
+@article{juanes1994accelerating,
+  title={Accelerating the onset of piscivory: intersection of predator and prey phenologies},
+  author={Juanes, Francis and Buckel, Jeffrey A and Conover, David O},
+  journal={Journal of Fish Biology},
+  volume={45},
+  pages={41--54},
+  year={1994},
+  publisher={Wiley Online Library}
+}
+@article{shepherd2006essential,
+  title={Essential fish habitat source document. Bluefish, Pomatomus saltatrix, life history and habitat characteristics},
+  author={Shepherd, Gary Robert and Packer, David B},
+  year={2006}
+}
+@book{powles1976observations,
+  title={Observations on composition, seasonality and distribution of ichthyoplankton from MARMAP cruises in the South Atlantic Bight in 1973},
+  author={Powles, Howard and Stender, Bruce W},
+  year={1976},
+  publisher={Marine Resources Research Institute, South Carolina Wildlife and Marine~…}
+}
+@book{able1998first,
+  title={The first year in the life of estuarine fishes in the Middle Atlantic Bight},
+  author={Able, Kenneth W and Fahay, Michael P and others},
+  volume={342},
+  year={1998},
+  publisher={Rutgers University Press New Brunswick, New Jersey}
+}
+@article{berrien1999distribution,
+  title={Distribution patterns of fish eggs in the US northeast continental shelf ecosystem, 1977-1987},
+  author={Berrien, Peter L and Sibunka, John D},
+  year={1999}
+}
+@book{bigelow1953fishes,
+  title={Fishes of the Gulf of Maine},
+  author={Bigelow, Henry Bryant and Schroeder, William Charles},
+  number={592},
+  year={1953},
+  publisher={US Government Printing Office}
+}
+
+@article{wilk1977biological,
+  title={Biological and fisheries data on bluefish, Pomatomus saltatrix (Linnaeus)},
+  author={Wilk, Stuart J},
+  year={1977}
+}
+
+@article{storer1853history,
+  title={A history of the fishes of Massachusetts},
+  author={Storer, David Humphreys},
+  journal={Memoirs of the American Academy of Arts and Sciences},
+  volume={5},
+  number={1},
+  pages={122--168},
+  year={1853},
+  publisher={JSTOR}
+}
+
+@article{richards1976age,
+  title={Age, growth, and food of bluefish (Pomatomus saltatrix) from East-Central Long Island Sound from July through November 1975},
+  author={Richards, Sarah W},
+  journal={Transactions of the American Fisheries Society},
+  volume={105},
+  number={4},
+  pages={523--525},
+  year={1976},
+  publisher={Wiley Online Library}
+}
+
+@article{slater2007overwintering,
+  title={Overwintering ability of young-of-the-year bluefish Pomatomus saltatrix: effect of ration and cohort of origin on survival},
+  author={Slater, Joshua J and Lankford Jr, Thomas E and Buckel, Jeffrey A},
+  journal={Marine Ecology Progress Series},
+  volume={339},
+  pages={259--269},
+  year={2007}
+}
+
+@article{scharf2006effects,
+  title={Effects of variable prey and cohort dynamics on growth of young-of-the-year estuarine bluefish: evidence for interactions between spring-and summer-spawned cohorts},
+  author={Scharf, Frederick S and Buckel, Jeffrey A and Rose, Kenneth A and Juanes, Francis and Cowan Jr, James H},
+  journal={Transactions of the American Fisheries Society},
+  volume={135},
+  number={5},
+  pages={1266--1289},
+  year={2006},
+  publisher={Taylor \& Francis}
+}
+
+@article{pfirrmann2019ecosystem,
+  title={Ecosystem services of restored oyster reefs in a Chesapeake Bay tributary: abundance and foraging of estuarine fishes},
+  author={Pfirrmann, Bruce W and Seitz, Rochelle D},
+  journal={Marine Ecology Progress Series},
+  volume={628},
+  pages={155--169},
+  year={2019}
+}
+
+@article{juanes1994piscivory,
+  title={Piscivory and prey size selection in youngof-the-year bluefish: predator preference or size-dependent capture success?},
+  author={Juanes, Francis and Conover, David O},
+  journal={Marine Ecology Progress Series},
+  pages={59--69},
+  year={1994},
+  publisher={JSTOR}
+}
+
+@book{oliver1989species,
+  title={Species Profiles: Life Histories and Environmental Requirements of Coastal Fishes and Invertebrates (South Atlantic): Bluefish},
+  author={Oliver, J Douglas and Van Den Avyle, Michael J and Bozeman, Earl L},
+  volume={82},
+  number={11},
+  year={1989},
+  publisher={The Group}
+}
+
+@article{norcross1974development,
+  title={Development of young bluefish (Pomatomus saltatrix) and distribution of eggs and young in Virginian coastal waters},
+  author={Norcross, JJ and Richardson, SL and Massmann, WH and Joseph, EB},
+  journal={Transactions of the American Fisheries Society},
+  volume={103},
+  number={3},
+  pages={477--497},
+  year={1974},
+  publisher={Wiley Online Library}
+}
+
+@article{miltner1995influence,
+  title={Influence of food and predation on the depth distribution of juvenile spot (Leiostomus xanthurus) in tidal nurseries},
+  author={Miltner, Robert J and Ross, Steve W and Posey, Martin H},
+  journal={Canadian Journal of Fisheries and Aquatic Sciences},
+  volume={52},
+  number={5},
+  pages={971--982},
+  year={1995},
+  publisher={NRC Research Press Ottawa, Canada}
+}
+
+@article{manderson2006dynamics,
+  title={Dynamics of early juvenile winter flounder predation risk on a North West Atlantic estuarine nursery ground},
+  author={Manderson, John P and Pessutti, Jeffrey and Shaheen, Patricia and Juanes, Francis},
+  journal={Marine Ecology Progress Series},
+  volume={328},
+  pages={249--265},
+  year={2006}
+}
+
+@article{kendall1981diel,
+  title={DIEL-DEPTH BISTRIBUTION OF SUMMER ICHTHYOPLANKTON IN},
+  author={KENDALL JR, ARTHUR W and Naplin, NA},
+  journal={Fishery Bulletin},
+  volume={79},
+  number={4},
+  pages={705},
+  year={1981},
+  publisher={National Marine Fisheries Service}
+}
+
+@article{friedland1988interannual,
+  title={Interannual variation in diet and condition in juvenile bluefish during estuarine residency},
+  author={Friedland, KD and Garman, GC and Bejda, AJ and Studholme, AL and Olla, B},
+  journal={Transactions of the American Fisheries Society},
+  volume={117},
+  number={5},
+  pages={474--479},
+  year={1988},
+  publisher={Taylor \& Francis}
+}
+
+@article{buckel2002competition,
+  title={Competition between juvenile striped bass and bluefish: resource partitioning and growth rate},
+  author={Buckel, Jeffrey A and McKown, Kim A},
+  journal={Marine Ecology Progress Series},
+  volume={234},
+  pages={191--204},
+  year={2002}
+}
+
+@article{buckel2000functional,
+  title={Functional response and switching behavior of young-of-the-year piscivorous bluefish},
+  author={Buckel, Jeffrey A and Stoner, Allan W},
+  journal={Journal of Experimental Marine Biology and Ecology},
+  volume={245},
+  number={1},
+  pages={25--41},
+  year={2000},
+  publisher={Elsevier}
+}
+@article{grothues2007scaling,
+  title={Scaling acoustic telemetry of bluefish in an estuarine observatory: detection and habitat use patterns},
+  author={Grothues, Thomas M and Able, Kenneth W},
+  journal={Transactions of the American Fisheries Society},
+  volume={136},
+  number={6},
+  pages={1511--1519},
+  year={2007},
+  publisher={Taylor \& Francis}
+}
+@article{buckel2004negative,
+  title={Negative effects of increasing group size on foraging in two estuarine piscivores},
+  author={Buckel, Jeffrey A and Stoner, Allan W},
+  journal={Journal of experimental marine biology and ecology},
+  volume={307},
+  number={2},
+  pages={183--196},
+  year={2004},
+  publisher={Elsevier}
+}
+
+@article{chiarella1990spawning,
+  title={Spawning season and first-year growth of adult bluefish from the New York Bight},
+  author={Chiarella, Louis A and Conover, David O},
+  journal={Transactions of the American Fisheries Society},
+  volume={119},
+  number={3},
+  pages={455--462},
+  year={1990},
+  publisher={Wiley Online Library}
+}
+
+@article{festa1979new,
+  title={New Jersey Department of Environmental Protection Division of Fish, Game and Shellfisheries Bure? u of Fisheries. Nacote Creek Research Station},
+  author={Festa, Patrick J and Hamer, Paul E and Chief, Asst and Cookingham, Russell A},
+  year={1979}
+}

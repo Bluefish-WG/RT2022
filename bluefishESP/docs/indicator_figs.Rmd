@@ -1,0 +1,1944 @@
+---
+title: "Bluefish ESP indicator figures"
+author: "Abigail Tyrell & Samantha Werner"
+date: "`r format(Sys.time(), '%d %b %Y')`"
+always_allow_html: true
+params: 
+  data: 
+  mrip_catch:
+  bluefish_nmfs:
+  trip_files: 
+  # dummy parameter to force connection with package functions
+  find_fxns: 
+output:
+  # html_document:
+  #   toc: true
+  #   number_sections: true
+  #   toc_depth: 5
+  #   toc_float:
+  #     collapsed: true
+  #   fig_caption: false
+  word_document:
+    fig_caption: false
+  # pdf_document:
+  #   fig_caption: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  results = "asis",
+  fig.height = 8,
+  fig.width = 6,
+  warning = FALSE,
+  message = FALSE
+)
+
+library(bluefishESP)
+`%>%` <- magrittr::`%>%`
+
+fig_info <- read.csv(here::here("data-raw/bluefish ESP figure information.csv"),
+  na.strings = ""
+)
+fig_info[is.na(fig_info)] <- "you haven't written this yet!"
+
+order <- read.csv(here::here("data-raw/indicator_key.csv"))
+
+# params$data <- dplyr::full_join(params$data,
+#                                 order) %>%
+#   dplyr::select(-INDICATOR_NAME) %>%
+#   dplyr::rename(INDICATOR_NAME = facet_label)
+
+# message(fig_info$alt_text)
+
+i <- 1
+```
+
+
+```{r map-setup, include=FALSE}
+# map setup
+xmin <- -81
+xmax <- -66
+ymin <- 26
+ymax <- 45
+xlims <- c(xmin, xmax)
+ylims <- c(ymin, ymax)
+crs <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
+
+ne_countries <- rnaturalearth::ne_countries(
+  scale = 10,
+  continent = "North America",
+  returnclass = "sf"
+) %>%
+  sf::st_transform()
+
+ne_states <- rnaturalearth::ne_states(
+  country = "united states of america",
+  returnclass = "sf"
+) %>% sf::st_transform()
+
+# strata
+strata <- NEesp::latlong %>%
+  dplyr::select(strata) %>%
+  dplyr::distinct() %>%
+  dplyr::rename(STRATA = strata)
+
+new_shape <- NEesp::shape %>%
+  dplyr::select(STRATA, geometry) %>%
+  sf::st_transform(proj4string = crs)
+
+# plot
+p1 <- ggplot2::ggplot() +
+  ggplot2::geom_sf(
+    data = ne_countries,
+    color = "grey60",
+    size = 0.25
+  ) +
+  ggplot2::geom_sf(
+    data = ne_states,
+    color = "grey60",
+    size = 0.05
+  ) +
+  ggplot2::coord_sf(
+    crs = crs,
+    xlim = xlims,
+    ylim = ylims
+  ) +
+  ggthemes::theme_map() +
+  ggplot2::theme(legend.direction = "horizontal")
+```
+
+# Background
+
+## Ecosystem background
+
+```{r, fig.width = 6, out.width = 6*72, fig.cap = fig_info$alt_text[i]}
+knitr::include_graphics(here::here("images/bluefish spatiotemporal conceptual model.png"),
+  rel_path = FALSE
+)
+```
+
+##### Figure `r i`. `r fig_info$caption[i]` {-}
+
+```{r}
+i <- i + 1
+```
+
+\newpage
+## Socioeconomic background
+
+```{r, fig.width = 6, out.width = 6*85, fig.cap = fig_info$alt_text[i]}
+knitr::include_graphics(here::here("images/fig_aa.png"), rel_path = FALSE)
+```
+
+##### Figure `r i`. `r fig_info$caption[i]` {-}
+
+```{r}
+i <- i + 1
+```
+
+```{r, fig.width = 6, out.width = 6*85, fig.cap = fig_info$alt_text[i]}
+knitr::include_graphics(here::here("images/fig_bb.png"), rel_path = FALSE)
+```
+
+##### Figure `r i`. `r fig_info$caption[i]` {-}
+
+```{r}
+i <- i + 1
+```
+
+\newpage
+```{r, fig.width = 6, out.width = 6*85, fig.cap = fig_info$alt_text[i]}
+knitr::include_graphics(here::here("images/fig_cc.png"), rel_path = FALSE)
+```
+
+##### Figure `r i`. `r fig_info$caption[i]` {-}
+
+```{r}
+i <- i + 1
+```
+
+```{r, fig.width = 6, out.width = 6*85, fig.cap = fig_info$alt_text[i]}
+knitr::include_graphics(here::here("images/fig_dd.png"), rel_path = FALSE)
+```
+
+##### Figure `r i`. `r fig_info$caption[i]` {-}
+
+```{r}
+i <- i + 1
+```
+
+\newpage
+```{r, fig.width = 6, out.width = 6*85, fig.cap = fig_info$alt_text[i]}
+knitr::include_graphics(here::here("images/fig_ee.png"), rel_path = FALSE)
+```
+
+##### Figure `r i`. `r fig_info$caption[i]` {-}
+
+```{r}
+i <- i + 1
+```
+
+```{r, fig.width = 6, out.width = 6*85, fig.cap = fig_info$alt_text[i]}
+knitr::include_graphics(here::here("images/fig_ff.png"), rel_path = FALSE)
+```
+
+##### Figure `r i`. `r fig_info$caption[i]` {-}
+
+```{r}
+i <- i + 1
+```
+
+\newpage
+```{r, fig.width = 6, out.width = 6*85, fig.cap = fig_info$alt_text[i]}
+knitr::include_graphics(here::here("images/fig_gg.png"), rel_path = FALSE)
+```
+
+##### Figure `r i`. `r fig_info$caption[i]` {-}
+
+```{r}
+i <- i + 1
+```
+
+```{r, fig.width = 6, out.width = 6*85, fig.cap = fig_info$alt_text[i]}
+knitr::include_graphics(here::here("images/fig_hh.png"), rel_path = FALSE)
+```
+
+##### Figure `r i`. `r fig_info$caption[i]` {-}
+
+```{r}
+i <- i + 1
+```
+
+\newpage
+```{r, fig.width = 6, out.width = 6*85, fig.cap = fig_info$alt_text[i]}
+knitr::include_graphics(here::here("images/fig_ii.png"), rel_path = FALSE)
+```
+
+##### Figure `r i`. `r fig_info$caption[i]` {-}
+
+```{r}
+i <- i + 1
+```
+
+\newpage
+# Diet
+
+```{r, fig.width = 6, out.width = 6*100, fig.cap = fig_info$alt_text[i]}
+knitr::include_graphics(here::here("images/nefsc1.png"), rel_path = FALSE)
+```
+
+##### Figure `r i`. `r fig_info$caption[i]` {-}
+
+```{r}
+i <- i + 1
+```
+
+```{r, fig.width = 6, out.width = 6*72, fig.cap = fig_info$alt_text[i]}
+knitr::include_graphics(here::here("images/neamap1.png"), rel_path = FALSE)
+```
+
+##### Figure `r i`. `r fig_info$caption[i]` {-}
+
+```{r}
+i <- i + 1
+```
+
+\newpage
+```{r, fig.width = 6, out.width = 6*72, fig.cap = fig_info$alt_text[i]}
+knitr::include_graphics(here::here("images/neamap2.png"), rel_path = FALSE)
+```
+
+##### Figure `r i`. `r fig_info$caption[i]` {-}
+
+```{r}
+i <- i + 1
+```
+
+```{r, fig.width = 6, out.width = 6*72, fig.cap = fig_info$alt_text[i]}
+knitr::include_graphics(here::here("images/chesmmap1.png"), rel_path = FALSE)
+```
+
+##### Figure `r i`. `r fig_info$caption[i]` {-}
+
+```{r}
+i <- i + 1
+```
+
+\newpage
+```{r, fig.width = 6, out.width = 6*72, fig.cap = fig_info$alt_text[i]}
+knitr::include_graphics(here::here("images/chesmmap2.png"), rel_path = FALSE)
+```
+
+##### Figure `r i`. `r fig_info$caption[i]` {-}
+
+```{r}
+i <- i + 1
+```
+
+\newpage
+# Environment and distribution
+
+## Eggs
+
+### EcoMon/MARMAP
+```{r}
+eggs <- readxl::read_excel(here::here("../bluefishLifeHistory/data-raw/dont-share/Bluefish_Eggs_AllNets_v1_08Apr2022.xlsx"),
+  sheet = 3
+)
+```
+
+```{r, fig.height = 4, fig.cap = fig_info$alt_text[i]}
+p1 +
+  ggplot2::geom_point(
+    data = eggs %>%
+      dplyr::mutate(BLUEFISH_EGG_100M3 = BLUEFISH_EGG_100M3 %>%
+        as.numeric() %>%
+        round()) %>%
+      dplyr::filter(
+        BLUEFISH_EGG_100M3 == 0,
+        MONTH %in% 5:8
+      ),
+    ggplot2::aes(
+      x = LONGITUDE,
+      y = LATITUDE
+    ),
+    fill = "white",
+    color = "gray80",
+    pch = 21
+  ) +
+  ggplot2::geom_point(
+    data = eggs %>%
+      dplyr::mutate(BLUEFISH_EGG_100M3 = BLUEFISH_EGG_100M3 %>%
+        as.numeric() %>%
+        round()) %>%
+      dplyr::filter(BLUEFISH_EGG_100M3 > 0),
+    ggplot2::aes(
+      x = LONGITUDE,
+      y = LATITUDE,
+      color = log(BLUEFISH_EGG_100M3)
+    ),
+    cex = 0.9
+  ) +
+  viridis::scale_color_viridis() +
+  ggplot2::facet_wrap(~MONTH,
+    nrow = 1,
+    labeller =
+      ggplot2::labeller(
+        MONTH = c("5" = "May", "6" = "June", "7" = "July", "8" = "August")
+      )
+  )
+```
+
+##### Figure `r i`. `r fig_info$caption[i]` {-}
+
+```{r}
+i <- i + 1
+```
+
+```{r}
+total_tows <- eggs %>%
+  dplyr::group_by(MONTH, BLUEFISH_EGG_100M3 > 0) %>%
+  dplyr::mutate(years = length(unique(YEAR))) %>%
+  dplyr::ungroup() %>%
+  dplyr::group_by(MONTH) %>%
+  dplyr::summarise(
+    total_n = sum(BLUEFISH_EGG_100M3),
+    n_tows = length(unique(FORMATED_EVENT_DATE)),
+    n_per_tow = total_n / n_tows,
+    n_positive_tow = sum(as.numeric(BLUEFISH_EGG_100M3 > 0)),
+    n_years = length(unique(YEAR)),
+    n_positive_years = sum(unique(years * as.numeric(BLUEFISH_EGG_100M3 > 0)))
+  )
+
+temp_eggs <- eggs %>%
+  dplyr::filter(BLUEFISH_EGG_100M3 > 0) %>%
+  dplyr::mutate(
+    BLUEFISH_EGG_100M3 = BLUEFISH_EGG_100M3 %>%
+      as.numeric(),
+    EGG_SFC_TEMP = EGG_SFC_TEMP %>%
+      as.numeric()
+  ) %>%
+  tidyr::drop_na(EGG_SFC_TEMP) %>%
+  dplyr::group_by(MONTH) %>%
+  dplyr::summarise(
+    n_temp = sum(BLUEFISH_EGG_100M3),
+    mean_surface_temp = sum(EGG_SFC_TEMP * BLUEFISH_EGG_100M3) / sum(BLUEFISH_EGG_100M3)
+  )
+
+sal_eggs <- eggs %>%
+  dplyr::filter(BLUEFISH_EGG_100M3 > 0) %>%
+  dplyr::mutate(
+    BLUEFISH_EGG_100M3 = BLUEFISH_EGG_100M3 %>%
+      as.numeric(),
+    SFC_SALT = SFC_SALT %>%
+      as.numeric()
+  ) %>%
+  tidyr::drop_na(SFC_SALT) %>%
+  dplyr::group_by(MONTH) %>%
+  dplyr::summarise(
+    n_sal = sum(BLUEFISH_EGG_100M3),
+    mean_surface_sal = sum(SFC_SALT * BLUEFISH_EGG_100M3) / sum(BLUEFISH_EGG_100M3)
+  )
+
+egg_table <- temp_eggs %>%
+  dplyr::left_join(sal_eggs) %>%
+  dplyr::left_join(total_tows) %>%
+  dplyr::select(
+    MONTH,
+    n_tows, n_positive_tow,
+    total_n, n_per_tow,
+    n_years, n_positive_years,
+    mean_surface_temp, n_temp,
+    mean_surface_sal, n_sal
+  ) %>%
+  dplyr::mutate(dplyr::across(.fns = ~ round(.x, digits = 2)))
+```
+
+```{r, egg-summary, results = "hide"}
+cat("Summary of environmental conditions where bluefish eggs were found in federal surveys")
+egg_table  %>%
+  flextable::flextable() %>%
+  flextable::colformat_num()
+```
+
+\newpage
+## Larvae
+
+### EcoMon/MARMAP
+```{r}
+larvae <- readxl::read_excel(here::here("../bluefishLifeHistory/data-raw/dont-share/Bluefish_AllNets_v1_05Apr2022.xlsx"),
+  sheet = 3
+) %>%
+  dplyr::mutate(
+    MONTH = ifelse(YEAR == 1, NA, MONTH),
+    YEAR = ifelse(YEAR == 1, 1985, YEAR)
+  ) %>%
+  tidyr::drop_na(MONTH)
+
+larvae <- larvae %>%
+  tidyr::pivot_longer(
+    cols = colnames(larvae)[30:70],
+    names_to = "size_group",
+    values_to = "size_group_abundance"
+  ) %>%
+  dplyr::mutate(
+    size_group = size_group %>%
+      stringr::str_remove("_ABUNDANCE"),
+    size_group_numeric = as.numeric(
+      stringr::str_split_fixed(size_group, "_", n = 2)[, 1]
+    ) + 0.5
+  )
+
+new_larvae <- larvae %>%
+  dplyr::mutate(TOTAL_ABUNDANCE = TOTAL_ABUNDANCE %>%
+    as.numeric() %>%
+    round()) %>%
+  dplyr::select(-c(size_group, size_group_abundance, size_group_numeric)) %>%
+  dplyr::distinct() %>%
+  dplyr::filter(MONTH %in% 4:9)
+```
+
+```{r, fig.height = 7, fig.cap = fig_info$alt_text[i]}
+p1 +
+  ggplot2::geom_point(
+    data = new_larvae %>%
+      dplyr::filter(TOTAL_ABUNDANCE == 0),
+    ggplot2::aes(
+      x = LONGITUDE,
+      y = LATITUDE
+    ),
+    fill = "white",
+    color = "gray80",
+    pch = 21
+  ) +
+  ggplot2::geom_point(
+    data = new_larvae %>%
+      dplyr::filter(TOTAL_ABUNDANCE > 0),
+    ggplot2::aes(
+      x = LONGITUDE,
+      y = LATITUDE,
+      color = log(TOTAL_ABUNDANCE)
+    ),
+    cex = 0.9
+  ) +
+  viridis::scale_color_viridis() +
+  ggplot2::facet_wrap(~MONTH,
+    nrow = 2,
+    labeller =
+      ggplot2::labeller(
+        MONTH = c("4" = "April", "5" = "May", "6" = "June", "7" = "July", "8" = "August", "9" = "September")
+      )
+  )
+```
+
+##### Figure `r i`. `r fig_info$caption[i]` {-}
+
+```{r}
+i <- i + 1
+```
+
+```{r}
+total_tows <- larvae %>%
+  dplyr::group_by(MONTH, size_group_abundance > 0) %>%
+  dplyr::mutate(years = length(unique(YEAR))) %>%
+  dplyr::ungroup() %>%
+  dplyr::group_by(MONTH) %>%
+  dplyr::summarise(
+    total_n = sum(size_group_abundance),
+    n_tows = length(unique(FORMATED_EVENT_DATE)),
+    n_per_tow = total_n / n_tows,
+    n_positive_tow = sum(as.numeric(size_group_abundance > 0)),
+    n_years = length(unique(YEAR)),
+    n_positive_years = sum(unique(years * as.numeric(size_group_abundance > 0)))
+  )
+
+temp_larvae <- larvae %>%
+  dplyr::filter(size_group_abundance > 0) %>%
+  dplyr::mutate(
+    size_group_abundance = size_group_abundance %>%
+      as.numeric(),
+    SFC_TEMP = SFC_TEMP %>%
+      as.numeric()
+  ) %>%
+  tidyr::drop_na(SFC_TEMP) %>%
+  dplyr::group_by(MONTH) %>%
+  dplyr::summarise(
+    n_temp = sum(size_group_abundance),
+    mean_surface_temp = sum(SFC_TEMP * size_group_abundance) / sum(size_group_abundance)
+  )
+
+sal_larvae <- larvae %>%
+  dplyr::filter(size_group_abundance > 0) %>%
+  dplyr::mutate(
+    size_group_abundance = size_group_abundance %>%
+      as.numeric(),
+    SFC_SALT = SFC_SALT %>%
+      as.numeric()
+  ) %>%
+  tidyr::drop_na(SFC_SALT) %>%
+  dplyr::group_by(MONTH) %>%
+  dplyr::summarise(
+    n_sal = sum(size_group_abundance),
+    mean_surface_sal = sum(SFC_SALT * size_group_abundance) / sum(size_group_abundance)
+  )
+
+larvae_table <- temp_larvae %>%
+  dplyr::full_join(sal_larvae) %>%
+  dplyr::full_join(total_tows) %>%
+  dplyr::select(
+    MONTH,
+    n_tows, n_positive_tow,
+    total_n, n_per_tow,
+    n_years, n_positive_years,
+    mean_surface_temp, n_temp,
+    mean_surface_sal, n_sal
+  ) %>%
+  dplyr::arrange(MONTH) %>%
+  dplyr::filter(total_n > 0) %>%
+  dplyr::mutate(dplyr::across(.fns = ~ round(.x, digits = 2)))
+```
+
+```{r, larvae-summary, results = "hide"}
+cat("Summary of environmental conditions where bluefish larvae were found in federal surveys")
+larvae_table %>%
+  flextable::flextable() %>%
+  flextable::colformat_num()
+```
+
+\newpage
+## Juveniles and adults
+
+### MRIP catch and CPUE
+
+```{r, mrip}
+## catch data -----
+wave_catch <- params$mrip_catch %>%
+  dplyr::group_by(wave_f, st_f, year) %>%
+  dplyr::summarise(
+    state_catch_n = sum(tot_cat, na.rm = TRUE),
+    state_land_lbs = sum(wgt_ab1, na.rm = TRUE)
+  ) %>%
+  dplyr::filter(!st_f %in% c("ALABAMA", "LOUISIANA", "MISSISSIPPI")) %>%
+  dplyr::ungroup() %>%
+  dplyr::group_by(wave_f, year) %>%
+  dplyr::mutate(
+    total_coast_catch = sum(state_catch_n),
+    total_coast_land = sum(state_land_lbs)
+  ) %>%
+  dplyr::ungroup() %>%
+  dplyr::mutate(
+    prop_coast_catch = state_catch_n / total_coast_catch,
+    prop_coast_land = state_land_lbs / total_coast_land
+  ) %>%
+  dplyr::ungroup() %>%
+  dplyr::group_by(st_f, year) %>%
+  dplyr::mutate(
+    max_state_catch = max(state_catch_n),
+    max_state_land = max(state_land_lbs),
+    prop_max_state_catch = state_catch_n / max_state_catch,
+    prop_max_state_land = state_land_lbs / max_state_land
+  )
+
+wave_catch$st_f <- factor(wave_catch$st_f,
+  levels = rev(c(
+    "MAINE", "NEW HAMPSHIRE", "MASSACHUSETTS",
+    "RHODE ISLAND", "CONNECTICUT", "NEW YORK",
+    "NEW JERSEY", "DELAWARE", "MARYLAND",
+    "VIRGINIA", "NORTH CAROLINA", "SOUTH CAROLINA",
+    "GEORGIA", "FLORIDA"
+  ))
+)
+wave_catch$wave_f <- factor(wave_catch$wave_f,
+  levels = c(
+    "JAN/FEB", "MAR/APR", "MAY/JUN",
+    "JUL/AUG", "SEP/OCT", "NOV/DEC"
+  )
+)
+
+catch_data <- wave_catch %>%
+  dplyr::mutate(
+    decade = floor(as.numeric(year) / 10) * 10,
+    st_f = dplyr::case_when(
+      st_f == "MAINE" ~ "ME",
+      st_f == "NEW HAMPSHIRE" ~ "NH",
+      st_f == "MASSACHUSETTS" ~ "MA",
+      st_f == "RHODE ISLAND" ~ "RI",
+      st_f == "CONNECTICUT" ~ "CT",
+      st_f == "NEW YORK" ~ "NY",
+      st_f == "NEW JERSEY" ~ "NJ",
+      st_f == "DELAWARE" ~ "DE",
+      st_f == "MARYLAND" ~ "MD",
+      st_f == "VIRGINIA" ~ "VA",
+      st_f == "NORTH CAROLINA" ~ "NC",
+      st_f == "SOUTH CAROLINA" ~ "SC",
+      st_f == "GEORGIA" ~ "GA",
+      st_f == "FLORIDA" ~ "FL",
+    )
+  ) %>%
+  # dplyr::filter(wave_f != "JAN/FEB") %>%
+  dplyr::group_by(st_f, wave_f) %>%
+  dplyr::summarise(
+    mean_prop_max_catch = mean(prop_max_state_catch),
+    mean_state_catch = mean(state_catch_n),
+    mean_prop_coast_catch = mean(prop_coast_catch)
+  )
+
+## unstandardized cpue -----
+cpue_data <- read.csv(here::here("data-raw/Unstdz_CPUE_StatexWave.csv")) %>%
+  dplyr::mutate(WAVE = dplyr::case_when(
+    WAVE == 1 ~ "JAN/FEB",
+    WAVE == 2 ~ "MAR/APR",
+    WAVE == 3 ~ "MAY/JUN",
+    WAVE == 4 ~ "JUL/AUG",
+    WAVE == 5 ~ "SEP/OCT",
+    WAVE == 6 ~ "NOV/DEC"
+  ))
+
+## standardized cpue ----
+s_cpue_data <- read.csv(here::here("data-raw/Standardized_CPUE_StatexWave.csv")) %>%
+  dplyr::mutate(WAVE = dplyr::case_when(
+    WAVE == 1 ~ "JAN/FEB",
+    WAVE == 2 ~ "MAR/APR",
+    WAVE == 3 ~ "MAY/JUN",
+    WAVE == 4 ~ "JUL/AUG",
+    WAVE == 5 ~ "SEP/OCT",
+    WAVE == 6 ~ "NOV/DEC"
+  ))
+
+data <- dplyr::full_join(
+  catch_data %>%
+    dplyr::select(-mean_prop_max_catch),
+  cpue_data %>%
+    dplyr::rename(
+      unstandardized_CPUE = CPUE,
+      st_f = STATE,
+      wave_f = WAVE
+    ) %>%
+    dplyr::select(-pPositive)
+) %>%
+  dplyr::full_join(s_cpue_data %>%
+    dplyr::rename(
+      standardized_CPUE = CPUE,
+      st_f = STATE,
+      wave_f = WAVE
+    ) %>%
+    dplyr::select(standardized_CPUE, st_f, wave_f))
+
+data$st_f <- factor(data$st_f,
+  levels = (c(
+    "ME", "NH", "MA",
+    "RI", "CT", "NY",
+    "NJ", "DE", "MD",
+    "VA", "NC", "SC",
+    "GA", "FL"
+  ))
+)
+data$wave_f <- factor(data$wave_f,
+  levels = c(
+    "JAN/FEB", "MAR/APR", "MAY/JUN",
+    "JUL/AUG", "SEP/OCT", "NOV/DEC"
+  )
+)
+```
+
+```{r, warning = FALSE}
+mrip_plot <- function(data) {
+  plt <- data %>%
+    tidyr::pivot_longer(
+      cols = c(
+        "mean_state_catch", "mean_prop_coast_catch",
+        "unstandardized_CPUE", "standardized_CPUE"
+      ),
+      names_to = "Metric"
+    ) %>%
+    dplyr::mutate(Metric = Metric %>%
+      stringr::str_replace_all("_", " ") %>%
+      stringr::str_wrap(15)) %>%
+    dplyr::rename(State = st_f) %>%
+    ggplot2::ggplot(ggplot2::aes(
+      x = wave_f,
+      y = value,
+      color = State,
+      shape = State,
+      lty = State,
+      group = State
+    )) +
+    ggplot2::geom_point(cex = 2) +
+    ggplot2::geom_line() +
+    nmfspalette::scale_color_nmfs(palette = "regional web") +
+    ggplot2::facet_grid(
+      rows = ggplot2::vars(Metric),
+      scales = "free",
+      switch = "y"
+    ) +
+    ggplot2::theme_bw() +
+    ggplot2::scale_y_continuous(labels = scales::comma) +
+    ggplot2::theme(
+      axis.title = ggplot2::element_blank(),
+      strip.placement = "outside"
+    )
+  return(plt)
+}
+```
+
+```{r, fig.cap = fig_info$alt_text[i], fig.height = 6}
+data %>%
+  dplyr::filter(st_f %in% c("ME", "NH", "MA", "RI", "CT")) %>%
+  mrip_plot() +
+  ggplot2::ggtitle("Northeast") +
+  ggplot2::theme(legend.position = "top")
+```
+
+##### Figure `r i`. `r fig_info$caption[i]` {-}
+
+```{r, fig.cap = fig_info$alt_text[i]}
+i <- i + 1
+```
+
+\newpage
+```{r, fig.cap = fig_info$alt_text[i], fig.height = 6}
+data %>%
+  dplyr::filter(st_f %in% c("NY", "NJ", "DE", "MD", "VA")) %>%
+  mrip_plot() +
+  ggplot2::ggtitle("Mid Atlantic") +
+  ggplot2::theme(legend.position = "top")
+```
+
+##### Figure `r i`. `r fig_info$caption[i]` {-}
+
+```{r}
+i <- i + 1
+```
+
+\newpage
+```{r, fig.cap = fig_info$alt_text[i], fig.height = 6}
+data %>%
+  dplyr::filter(st_f %in% c("NC", "SC", "GA", "FL")) %>%
+  mrip_plot() +
+  ggplot2::ggtitle("Southeast") +
+  ggplot2::theme(legend.position = "top")
+```
+
+##### Figure `r i`. `r fig_info$caption[i]` {-}
+
+```{r}
+i <- i + 1
+```
+
+\newpage
+### NMFS bottom trawl
+
+```{r}
+dat <- bluefish_nmfs %>%
+  dplyr::mutate(
+    MONTH = lubridate::month(EST_TOWDATE),
+    size_group = ifelse(LENGTH <= 30.3,
+      "small (<=30.3cm)",
+      ifelse(LENGTH >= 50.0,
+        "large (>=50.0cm)",
+        "medium (30.3-50.0cm)"
+      )
+    )
+  ) %>%
+  dplyr::group_by(size_group, MONTH, EST_TOWDATE, LAT, LON, SURFTEMP, SURFSALIN) %>%
+  dplyr::summarise(n_fish = sum(NUMLEN)) %>%
+  dplyr::ungroup()
+
+all <- all_nmfs %>%
+  dplyr::mutate(MONTH = lubridate::month(EST_TOWDATE))
+```
+
+```{r, fig.cap = fig_info$alt_text[i]}
+# small fish
+p1 +
+  ggplot2::geom_point(
+    data = all,
+    ggplot2::aes(
+      x = LON,
+      y = LAT
+    ),
+    fill = "white",
+    color = "gray80",
+    pch = 21
+  ) +
+  ggplot2::geom_point(
+    data = dat %>%
+      dplyr::filter(stringr::str_detect(size_group, "small")),
+    ggplot2::aes(
+      x = LON,
+      y = LAT,
+      color = log(n_fish)
+    ),
+    cex = 0.9
+  ) +
+  viridis::scale_color_viridis() +
+  ggplot2::facet_wrap(~MONTH,
+    labeller =
+      ggplot2::labeller(
+        MONTH = c(
+          "1" = "January", "2" = "February", "3" = "March",
+          "4" = "April", "5" = "May", "6" = "June",
+          "7" = "July", "8" = "August", "9" = "September",
+          "10" = "October", "11" = "November", "12" = "December"
+        )
+      )
+  ) +
+  ggplot2::ggtitle("Small fish (<=30.3cm)")
+```
+
+##### Figure `r i`. `r fig_info$caption[i]` {-}
+
+```{r}
+i <- i + 1
+```
+
+\newpage
+```{r, fig.cap = fig_info$alt_text[i]}
+# medium fish
+p1 +
+  ggplot2::geom_point(
+    data = all,
+    ggplot2::aes(
+      x = LON,
+      y = LAT
+    ),
+    fill = "white",
+    color = "gray80",
+    pch = 21
+  ) +
+  ggplot2::geom_point(
+    data = dat %>%
+      dplyr::filter(stringr::str_detect(size_group, "medium")),
+    ggplot2::aes(
+      x = LON,
+      y = LAT,
+      color = log(n_fish)
+    ),
+    cex = 0.9
+  ) +
+  viridis::scale_color_viridis() +
+  ggplot2::facet_wrap(~MONTH,
+    labeller =
+      ggplot2::labeller(
+        MONTH = c(
+          "1" = "January", "2" = "February", "3" = "March",
+          "4" = "April", "5" = "May", "6" = "June",
+          "7" = "July", "8" = "August", "9" = "September",
+          "10" = "October", "11" = "November", "12" = "December"
+        )
+      )
+  ) +
+  ggplot2::ggtitle("Medium fish (30.3-50.0cm)")
+```
+
+##### Figure `r i`. `r fig_info$caption[i]` {-}
+
+```{r}
+i <- i + 1
+```
+
+\newpage
+```{r, fig.cap = fig_info$alt_text[i]}
+# large fish
+p1 +
+  ggplot2::geom_point(
+    data = all,
+    ggplot2::aes(
+      x = LON,
+      y = LAT
+    ),
+    fill = "white",
+    color = "gray80",
+    pch = 21
+  ) +
+  ggplot2::geom_point(
+    data = dat %>%
+      dplyr::filter(stringr::str_detect(size_group, "large")),
+    ggplot2::aes(
+      x = LON,
+      y = LAT,
+      color = log(n_fish)
+    ),
+    cex = 0.9
+  ) +
+  viridis::scale_color_viridis() +
+  ggplot2::facet_wrap(~MONTH,
+    labeller =
+      ggplot2::labeller(
+        MONTH = c(
+          "1" = "January", "2" = "February", "3" = "March",
+          "4" = "April", "5" = "May", "6" = "June",
+          "7" = "July", "8" = "August", "9" = "September",
+          "10" = "October", "11" = "November", "12" = "December"
+        )
+      )
+  ) +
+  ggplot2::ggtitle("Large fish (>=50.0cm)")
+```
+
+##### Figure `r i`. `r fig_info$caption[i]` {-}
+
+```{r, fig.cap = fig_info$alt_text[i]}
+i <- i + 1
+```
+
+```{r}
+total_tows <- all %>%
+  dplyr::group_by(MONTH) %>%
+  dplyr::summarise(n_tows = length(unique(EST_TOWDATE)))
+
+temp <- dat %>%
+  dplyr::mutate(SURFTEMP = ifelse(SURFTEMP == 0, NA, SURFTEMP)) %>%
+  tidyr::drop_na(SURFTEMP) %>%
+  dplyr::group_by(MONTH, size_group) %>%
+  dplyr::summarise(
+    n_temp = sum(n_fish),
+    mean_surface_temp = sum(SURFTEMP * n_fish) / sum(n_fish)
+  )
+
+sal <- dat %>%
+  tidyr::drop_na(SURFSALIN) %>%
+  dplyr::group_by(MONTH, size_group) %>%
+  dplyr::summarise(
+    n_sal = sum(n_fish),
+    mean_surface_sal = sum(SURFSALIN * n_fish) / sum(n_fish)
+  )
+
+summary_dat <- dat %>%
+  dplyr::group_by(MONTH, size_group) %>%
+  dplyr::summarise(total_n = sum(n_fish)) %>%
+  dplyr::left_join(temp) %>%
+  dplyr::left_join(sal) %>%
+  dplyr::left_join(total_tows) %>%
+  dplyr::mutate(n_per_tow = total_n / n_tows) %>%
+  dplyr::select(
+    MONTH, size_group, n_tows, total_n, n_per_tow,
+    mean_surface_temp, n_temp,
+    mean_surface_sal, n_sal
+  )
+```
+
+```{r}
+small <- summary_dat %>%
+  dplyr::filter(stringr::str_detect(size_group, "small")) %>%
+  dplyr::select(-size_group) %>%
+  dplyr::mutate(dplyr::across(.fns = ~ round(.x, digits = 2))) 
+
+medium <- summary_dat %>%
+  dplyr::filter(stringr::str_detect(size_group, "medium")) %>%
+  dplyr::select(-size_group) %>%
+  dplyr::mutate(dplyr::across(.fns = ~ round(.x, digits = 2))) 
+
+large <- summary_dat %>%
+  dplyr::filter(stringr::str_detect(size_group, "large")) %>%
+  dplyr::select(-size_group) %>%
+  dplyr::mutate(dplyr::across(.fns = ~ round(.x, digits = 2))) 
+```
+
+```{r, small-summary, results = "hide"}
+cat("Summary of environmental conditions where small bluefish (<=30.3cm) were found in the NMFS bottom trawl")
+small %>%
+  flextable::flextable() %>%
+  flextable::colformat_num()
+```
+
+```{r, medium-summary, results = "hide"}
+cat("Summary of environmental conditions where medium bluefish (30.3-50.0cm) were found in the NMFS bottom trawl")
+medium %>%
+  flextable::flextable() %>%
+  flextable::colformat_num()
+```
+
+```{r, large-summary, results = "hide"}
+cat("Summary of environmental conditions where large bluefish (>=50.0cm) were found in the NMFS bottom trawl")
+
+large %>%
+  flextable::flextable() %>%
+  flextable::colformat_num()
+```
+
+\newpage
+#### Length distributions
+
+```{r, results = "asis"}
+# NEFSC all
+
+source(here::here("../bluefishLifeHistory/R/env-functions.R"))
+
+dat <- bluefish_nmfs %>%
+  dplyr::mutate(
+    Month = lubridate::month(EST_TOWDATE),
+    Program = "NEFSCTrawl"
+  ) %>%
+  dplyr::rename(Year = YEAR) %>%
+  dplyr::ungroup() %>%
+  tibble::as_tibble()
+
+dat$Month <- month.name[dat$Month]
+dat$Month <- factor(dat$Month, levels = month.name)
+
+dat <- expand_n(data = dat, col = "NUMLEN")
+
+nmonth <- length(unique(dat$Month))
+nsurv <- length(unique(paste(dat$Month, dat$Program))) / nmonth
+nsurv <- dplyr::case_when(
+  nsurv > 3 ~ 2,
+  nsurv > 1.5 & nsurv <= 3 ~ 0,
+  nsurv <= 1.5 ~ -2
+)
+
+fheight <- ifelse(nmonth + nsurv < 8,
+  nmonth + nsurv,
+  8
+)
+fheight <- ifelse(fheight < 3.5, 3.5, fheight)
+
+plt <- dat %>%
+  ggpubr::ggviolin(
+    x = "Program",
+    y = "LENGTH",
+    add = "jitter",
+    add.params = list(
+      color = "Year",
+      alpha = 0.5
+    ),
+    title = "NMFS Bottom Trawl",
+    ylab = FALSE,
+    ggtheme = ggplot2::theme_bw(),
+    width = 1
+  ) +
+  viridis::scale_color_viridis(
+    discrete = FALSE,
+    breaks = scales::breaks_extended(n = 3)
+  ) +
+  ggplot2::facet_grid(
+    rows = ggplot2::vars(Month),
+    space = "free_y",
+    scales = "free_y"
+  ) +
+  ggplot2::theme(
+    legend.position = "bottom",
+    strip.text.y = ggplot2::element_text(angle = 0),
+    axis.text.y = ggplot2::element_blank(),
+    axis.ticks.y = ggplot2::element_blank()
+  ) +
+  ggplot2::ylab("Fork length (cm)") +
+  ggplot2::coord_flip() +
+  ggplot2::ylim(c(0, 100))
+
+# print in child doc with dynamic height
+res <- knitr::knit_child(here::here("docs/length-fig-child.Rmd"))
+cat(res, sep = "\n\n")
+```
+
+### State surveys
+
+```{r, results = "asis"}
+# not good practice, but using as a workaround
+devtools::load_all(here::here("../bluefishLifeHistory"))
+
+surv <- raw_survey_data %>%
+  dplyr::ungroup() %>%
+  bump_ages() %>%
+  dplyr::ungroup() %>%
+  interpolate_lengths() %>%
+  dplyr::ungroup() %>%
+  remove_outliers() %>%
+  dplyr::ungroup() %>%
+  dplyr::select(
+    SampleID, State, Year, Month, Source, Program, Area,
+    ForkLengthCM, WeightKG, Sex, Maturity, DataSource,
+    Station, Age, AgeType, Semester, Geo, Decade,
+    Cohort, CohortDecade, MaturityBin
+  ) %>%
+  dplyr::group_by(State, Program) %>%
+  dplyr::mutate(
+    n_data = dplyr::n(),
+    n_year = length(unique(Year))
+  ) %>%
+  dplyr::filter(
+    n_data > 20,
+    n_year > 2
+  ) %>%
+  tidyr::drop_na(State, Program, Month) %>%
+  dplyr::ungroup()
+# surv$Program <- stringr::str_wrap(surv$Program, 15)
+
+surv$Month <- month.name[surv$Month]
+surv$Month <- factor(surv$Month, levels = month.name)
+
+for (j in levels(surv$State)[-c(1, 11, 12, 17)]) {
+  dat <- surv %>%
+    dplyr::filter(State == j)
+
+  nmonth <- length(unique(dat$Month))
+  nsurv <- length(unique(paste(dat$Month, dat$Program))) / nmonth
+  nsurv <- dplyr::case_when(
+    nsurv > 3 ~ 2,
+    nsurv > 1.5 & nsurv <= 3 ~ 0,
+    nsurv <= 1.5 ~ -2
+  )
+
+  fheight <- ifelse(nmonth + nsurv < 8,
+    nmonth + nsurv,
+    8
+  )
+  fheight <- ifelse(fheight < 3.5, 3.5, fheight)
+
+  plt <- dat %>%
+    ggpubr::ggviolin(
+      x = "Program",
+      y = "ForkLengthCM",
+      add = "jitter",
+      add.params = list(
+        color = "Year",
+        alpha = 0.5
+      ),
+      title = j,
+      ylab = FALSE,
+      ggtheme = ggplot2::theme_bw(),
+      width = 1
+    ) +
+    viridis::scale_color_viridis(
+      discrete = FALSE,
+      breaks = scales::breaks_extended(n = 4)
+    ) +
+    ggplot2::facet_grid(
+      rows = ggplot2::vars(Month),
+      space = "free_y",
+      scales = "free_y"
+    ) +
+    ggplot2::theme(
+      legend.position = "bottom",
+      strip.text.y = ggplot2::element_text(angle = 0)
+    ) +
+    ggplot2::ylab("Fork length (cm)") +
+    ggplot2::coord_flip()
+
+  # print in child doc with dynamic height
+  res <- knitr::knit_child(here::here("docs/length-fig-child.Rmd"))
+  cat(res, sep = "\n\n")
+}
+```
+
+### Bluefish length cohorts
+
+```{r}
+surv <- raw_survey_data %>%
+  bump_ages() %>%
+  interpolate_lengths() %>%
+  remove_outliers() %>%
+  dplyr::ungroup() %>%
+  dplyr::select(
+    SampleID, State, Year, Month, Source, Program, Area,
+    ForkLengthCM, WeightKG, Sex, Maturity, DataSource,
+    Station, Age, AgeType, Semester, Geo, Decade,
+    Cohort, CohortDecade, MaturityBin
+  ) %>%
+  dplyr::filter(
+    ForkLengthCM <= 30.3,
+    ForkLengthCM > 1
+  ) %>%
+  dplyr::group_by(Month, State, Program) %>%
+  dplyr::mutate(
+    n_data = dplyr::n(),
+    n_year = length(unique(Year))
+  ) %>%
+  dplyr::filter(
+    n_data > 20,
+    n_year > 2
+  ) %>%
+  tidyr::drop_na(State, Program, Month)
+
+surv$Program <- stringr::str_wrap(surv$Program, 15)
+
+plot_summary <- function(data, title) {
+  plt <- data %>%
+    ggplot2::ggplot(ggplot2::aes(
+      x = Month,
+      y = State,
+      fill = fish
+    )) +
+    ggplot2::geom_tile(color = "black") +
+    ggplot2::theme_bw() +
+    ggplot2::scale_y_discrete(limits = rev) +
+    ggplot2::scale_fill_manual(
+      values = c(
+        "gray90",
+        nmfspalette::nmfs_palette(palette = "oceans")(3)[2]
+      ),
+      name = "Fish observed*?"
+    ) +
+    ggplot2::scale_x_continuous(
+      breaks = 1:12,
+      minor_breaks = seq(0.5, 12.5, by = 1)
+    ) +
+    ggplot2::theme(
+      panel.grid.major = ggplot2::element_blank(),
+      legend.position = "bottom"
+    ) +
+    ggplot2::ggtitle(title)
+
+  return(plt)
+}
+```
+
+#### Observations by month
+
+```{r}
+all_obs <- raw_survey_data %>%
+  tidyr::drop_na(Month, State) %>%
+  dplyr::ungroup() %>%
+  dplyr::select(Month, State) %>%
+  dplyr::distinct() %>%
+  dplyr::mutate(survey = TRUE)
+```
+
+```{r}
+dat <- surv %>%
+  dplyr::ungroup() %>%
+  dplyr::filter(ForkLengthCM < 15) %>%
+  dplyr::select(Month, State) %>%
+  dplyr::distinct() %>%
+  dplyr::mutate(fish = "yes") %>%
+  dplyr::full_join(all_obs) %>%
+  dplyr::mutate(fish = ifelse(survey == TRUE & is.na(fish), "no", fish))
+
+figa <- plot_summary(dat, title = "Bluefish <15cm") %>%
+  try()
+```
+
+```{r}
+dat <- surv %>%
+  dplyr::ungroup() %>%
+  dplyr::filter(ForkLengthCM >= 15 & ForkLengthCM <= 30.3) %>%
+  dplyr::group_by(Month, State) %>%
+  dplyr::distinct() %>%
+  dplyr::mutate(fish = "yes") %>%
+  dplyr::full_join(all_obs) %>%
+  dplyr::mutate(fish = ifelse(survey == TRUE & is.na(fish), "no", fish))
+
+figb <- plot_summary(dat, title = "Bluefish 15-30.3cm") %>%
+  try()
+```
+
+```{r, fig.height = 3, fig.cap = fig_info$alt_text[i]}
+ggpubr::ggarrange(figa, figb, ncol = 2, common.legend = TRUE, legend = "bottom")
+```
+
+```{r}
+surv$Month <- month.name[surv$Month]
+surv$Month <- factor(surv$Month, levels = month.name)
+```
+
+##### Figure `r i`. `r fig_info$caption[i]` {-}
+
+```{r}
+i <- i + 1
+```
+
+\newpage
+#### New Hampshire
+
+```{r, fig.height = 6, fig.cap = fig_info$alt_text[i]}
+dat <- surv %>%
+  dplyr::filter(State == "NH") %>%
+  dplyr::group_by(Year, Month) %>%
+  dplyr::mutate(n_fish = dplyr::n()) %>%
+  dplyr::filter(n_fish > 1) %>%
+  dplyr::ungroup()
+
+if (nrow(dat) > 0) {
+  plt <- dat %>%
+    ggplot2::ggplot(ggplot2::aes(
+      x = ForkLengthCM,
+      color = Month,
+      fill = Month
+    )) +
+    ggplot2::geom_freqpoly(
+      binwidth = 1,
+      lwd = 1.5
+    ) +
+    # ggpubr::ggdensity(
+    #   x = "ForkLengthCM",
+    #   y = "..count..",
+    #   color = "Month",
+    #   fill = "Month",
+    #   palette = nmfspalette::nmfs_palette(palette = "regional web")(5),
+    #   rug = TRUE
+    # ) +
+    ggplot2::facet_wrap(~Year,
+      # scales = "free_y",
+      ncol = 2,
+      strip.position = "right"
+    ) +
+    ggplot2::scale_y_continuous(n.breaks = 3) +
+    ggplot2::theme_bw() +
+    ggplot2::ggtitle("New Hampshire Juvenile Finfish Survey") +
+    nmfspalette::scale_color_nmfs(palette = "regional web") +
+    ggplot2::theme(
+      legend.position = "bottom",
+      strip.text.y = ggplot2::element_text(angle = 0),
+      panel.grid = ggplot2::element_blank()
+    ) +
+    ggplot2::ylab("Count") +
+    ggplot2::xlab("Fork length (cm)")
+
+  print(plt)
+  cat("\n\n")
+}
+```
+
+##### Figure `r i`. `r fig_info$caption[i]` {-}
+
+```{r}
+i <- i + 1
+```
+
+\newpage
+#### New York
+
+```{r, fig.height = 8, fig.cap = fig_info$alt_text[i]}
+dat <- surv %>%
+  dplyr::filter(State == "NY") # %>%
+# dplyr::group_by(Year, Month, Program) %>%
+# dplyr::mutate(n_fish = dplyr::n()) %>%
+# dplyr::filter(n_fish > 1) %>%
+# dplyr::ungroup()
+
+plt <- dat %>%
+  dplyr::filter(Program == "Peconic Bay\nSmall Mesh\nTrawl Survey") %>%
+  ggplot2::ggplot(ggplot2::aes(
+    x = ForkLengthCM,
+    color = Month,
+    fill = Month
+  )) +
+  ggplot2::geom_freqpoly(
+    binwidth = 1,
+    lwd = 1.5
+  ) +
+  nmfspalette::scale_color_nmfs(palette = "regional web") +
+  # ggpubr::ggdensity(
+  #   x = "ForkLengthCM",
+  #   y = "..count..",
+  #   color = "Month",
+  #   fill = "Month",
+  #   palette = nmfspalette::nmfs_palette(palette = "regional web")(7),
+  #   rug = TRUE
+  # ) +
+  ggplot2::facet_wrap(~Year,
+    # scales = "free_y",
+    ncol = 2,
+    strip.position = "right"
+  ) +
+  ggplot2::scale_y_continuous(n.breaks = 3) +
+  ggplot2::theme_bw() +
+  ggplot2::ggtitle("New York Peconic Bay Small Mesh Trawl Survey") +
+  ggplot2::theme(
+    legend.position = "bottom",
+    strip.text.y = ggplot2::element_text(angle = 0),
+    panel.grid = ggplot2::element_blank()
+  ) +
+  ggplot2::ylab("Count") +
+  ggplot2::xlab("Fork length (cm)")
+
+print(plt)
+cat("\n\n")
+```
+ 
+##### Figure `r i`. `r fig_info$caption[i]` {-}
+
+```{r}
+i <- i + 1
+```
+
+\newpage
+```{r}
+# plt <- dat %>%
+#   dplyr::filter(Program == "Western Long\nIsland Seine\nSurvey") %>%
+#   ggpubr::ggdensity(
+#     x = "ForkLengthCM",
+#     y = "..count..",
+#     color = "Month",
+#     fill = "Month",
+#     palette = nmfspalette::nmfs_palette(palette = "regional web")(7),
+#     rug = TRUE
+#   ) +
+#   ggplot2::facet_wrap(~Year,
+#     scales = "free_y",
+#     ncol = 4
+#   ) +
+#   ggplot2::theme_bw() +
+#   ggplot2::ggtitle("New York Western Long Island Seine Survey") +
+#   ggplot2::theme(legend.position = "bottom") +
+#   ggplot2::ylab("Count") +
+#   ggplot2::xlab("Fork length (cm)")
+
+plt <- dat %>%
+  dplyr::filter(Program == "Western Long\nIsland Seine\nSurvey") %>%
+  ggplot2::ggplot(ggplot2::aes(
+    x = ForkLengthCM,
+    color = Month,
+    fill = Month
+  )) +
+  ggplot2::geom_freqpoly(
+    binwidth = 1,
+    lwd = 1.5
+  ) +
+  nmfspalette::scale_color_nmfs(palette = "regional web") +
+  # ggplot2::geom_histogram(alpha = 0.4,
+  #                         binwidth = 1,
+  #                         position = "identity") +
+  ggplot2::facet_wrap(~Year,
+    # scales = "free_y",
+    ncol = 2,
+    strip.position = "right"
+  ) +
+  ggplot2::scale_y_continuous(n.breaks = 3) +
+  nmfspalette::scale_color_nmfs(palette = "regional web") +
+  ggplot2::theme_bw() +
+  ggplot2::ggtitle("New York Western Long Island Seine Survey") +
+  ggplot2::theme(
+    legend.position = "bottom",
+    strip.text.y = ggplot2::element_text(angle = 0),
+    panel.grid = ggplot2::element_blank()
+  ) +
+  ggplot2::ylab("Count") +
+  ggplot2::xlab("Fork length (cm)")
+
+print(plt)
+cat("\n\n")
+```
+
+##### Figure `r i`. `r fig_info$caption[i]` {-}
+
+```{r}
+i <- i + 1
+```
+
+\newpage
+#### NEAMAP
+
+```{r}
+dat <- surv %>%
+  dplyr::filter(Program == "NEAMAP") %>%
+  dplyr::group_by(Year, Month) %>%
+  dplyr::mutate(n_fish = dplyr::n()) %>%
+  dplyr::filter(n_fish > 1) %>%
+  dplyr::ungroup()
+
+if (nrow(dat) > 0) {
+  plt <- dat %>%
+    ggplot2::ggplot(ggplot2::aes(
+      x = ForkLengthCM,
+      color = Month,
+      fill = Month
+    )) +
+    ggplot2::geom_freqpoly(
+      binwidth = 1,
+      lwd = 1.5
+    ) +
+    nmfspalette::scale_color_nmfs(palette = "regional web") +
+    # ggpubr::ggdensity(
+    #   x = "ForkLengthCM",
+    #   y = "..count..",
+    #   color = "Month",
+    #   fill = "Month",
+    #   palette = nmfspalette::nmfs_palette(palette = "regional web")(5),
+    #   rug = TRUE
+    # ) +
+    ggplot2::facet_grid(
+      cols = ggplot2::vars(State),
+      rows = ggplot2::vars(Year)
+    ) +
+    ggplot2::scale_y_continuous(n.breaks = 3) +
+    ggplot2::theme_bw() +
+    ggplot2::ggtitle("NEAMAP") +
+    ggplot2::theme(
+      legend.position = "bottom",
+      strip.text.y = ggplot2::element_text(angle = 0),
+      panel.grid = ggplot2::element_blank()
+    ) +
+    ggplot2::ylab("Count") +
+    ggplot2::xlab("Fork length (cm)")
+
+  print(plt)
+  cat("\n\n")
+}
+```
+
+##### Figure `r i`. `r fig_info$caption[i]` {-}
+
+```{r}
+i <- i + 1
+```
+
+\newpage
+#### SEAMAP and South Carolina DNR Coastral Trawl 
+
+```{r, fig.cap = fig_info$alt_text[i]}
+dat <- surv %>%
+  dplyr::filter(Program == "SCDNR - Coastal\nTrawl" |
+    Program == "SEAMAP-SA CTS") %>%
+  dplyr::group_by(Year, Month) %>%
+  dplyr::mutate(n_fish = dplyr::n()) %>%
+  dplyr::filter(n_fish > 1) %>%
+  dplyr::ungroup()
+
+if (nrow(dat) > 0) {
+  plt <- dat %>%
+    ggplot2::ggplot(ggplot2::aes(
+      x = ForkLengthCM,
+      color = Month,
+      fill = Month
+    )) +
+    ggplot2::geom_freqpoly(
+      binwidth = 1,
+      lwd = 1.5
+    ) +
+    nmfspalette::scale_color_nmfs(palette = "regional web") +
+    # ggpubr::ggdensity(
+    #   x = "ForkLengthCM",
+    #   y = "..count..",
+    #   color = "Month",
+    #   fill = "Month",
+    #   palette = nmfspalette::nmfs_palette(palette = "regional web")(6),
+    #   rug = TRUE
+    # ) +
+    ggplot2::facet_grid(
+      cols = ggplot2::vars(State),
+      rows = ggplot2::vars(Year),
+      scales = "free_y"
+    ) +
+    ggplot2::scale_y_continuous(n.breaks = 2) +
+    ggplot2::theme_bw() +
+    ggplot2::ggtitle("SCDNR - Coastal Trawl and SEAMAP") +
+    ggplot2::theme(
+      legend.position = "bottom",
+      strip.text.y = ggplot2::element_text(angle = 0),
+      panel.grid = ggplot2::element_blank()
+    ) +
+    ggplot2::ylab("Count") +
+    ggplot2::xlab("Fork length (cm)")
+
+  print(plt)
+  cat("\n\n")
+}
+```
+
+##### Figure `r i`. `r fig_info$caption[i]` {-}
+
+```{r}
+i <- i + 1
+```
+
+\newpage
+#### NMFS bottom trawl
+
+```{r}
+dat4 <- bluefish_nmfs %>%
+  dplyr::filter(
+    LENGTH <= 30.3,
+    SEASON == "FALL"
+  ) %>%
+  dplyr::mutate(Month = lubridate::month(EST_TOWDATE)) %>%
+  dplyr::group_by(YEAR, Month) %>%
+  dplyr::mutate(n_fish = dplyr::n()) %>%
+  dplyr::filter(n_fish > 1) %>%
+  dplyr::ungroup() %>%
+  tibble::as_tibble()
+
+dat4$Month <- month.name[dat4$Month]
+dat4$Month <- factor(dat4$Month, levels = month.name)
+
+dat4 <- expand_n(data = dat4, col = "NUMLEN")
+
+dat4 %>%
+  ggplot2::ggplot(ggplot2::aes(
+    x = LENGTH,
+    color = Month
+  )) +
+  ggplot2::geom_freqpoly(
+    binwidth = 1,
+    lwd = 1.5
+  ) +
+  nmfspalette::scale_color_nmfs(palette = "regional web") +
+  # ggpubr::ggdensity(
+  #   x = "LENGTH",
+  #   y = "..count..",
+  #   color = "Month",
+  #   fill = "Month",
+  #   palette = nmfspalette::nmfs_palette(palette = "regional web")(4)
+  # ) +
+  ggplot2::facet_wrap(~YEAR,
+    scales = "free_y",
+    ncol = 2,
+    strip.position = "right"
+  ) +
+  ggplot2::scale_y_continuous(n.breaks = 2) +
+  ggplot2::theme_bw() +
+  ggplot2::ggtitle("NMFS bottom trawl") +
+  ggplot2::theme(
+    legend.position = "bottom",
+    strip.text.y = ggplot2::element_text(angle = 0),
+    panel.grid = ggplot2::element_blank()
+  ) +
+  ggplot2::ylab("Count") +
+  ggplot2::xlab("Fork length (cm)")
+```
+
+##### Figure `r i`. `r fig_info$caption[i]` {-}
+
+```{r}
+i <- i + 1
+```
+
+\newpage
+# Indicator methods
+
+```{r, fig.width = 6, out.width = 6*90, fig.cap = fig_info$alt_text[i]}
+knitr::include_graphics(here::here("images/bluefish conceptual model.png"), rel_path = FALSE)
+# print("conceptual model placeholder")
+```
+
+##### Figure `r i`. `r fig_info$caption[i]` {-}
+
+```{r}
+i <- i + 1
+```
+
+\newpage
+```{r, fig.height = 6, fig.cap = fig_info$alt_text[i]}
+# setup
+crs <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
+
+ne_countries <- rnaturalearth::ne_countries(
+  scale = 10,
+  continent = "North America",
+  returnclass = "sf"
+) %>%
+  sf::st_transform()
+
+ne_states <- rnaturalearth::ne_states(
+  country = "united states of america",
+  returnclass = "sf"
+) %>% sf::st_transform()
+
+
+# strata
+strata <- NEesp::latlong %>%
+  dplyr::select(strata) %>%
+  dplyr::distinct() %>%
+  dplyr::rename(STRATA = strata)
+
+new_shape <- NEesp::shape %>%
+  dplyr::select(STRATA, geometry) %>%
+  sf::st_transform(proj4string = crs)
+
+large_geom <- new_shape %>%
+  dplyr::summarise(geometry = sf::st_union(geometry)) %>%
+  sf::st_crop(y = c(
+    xmin = -80, xmax = -69,
+    ymax = 41.5, ymin = 32
+  ))
+
+p1 <- ggplot2::ggplot() +
+  ggplot2::geom_sf(
+    data = large_geom,
+    fill = nmfspalette::nmfs_palette(palette = "regional web")(1),
+    size = 0.05,
+    alpha = 0.5,
+    color = "grey30"
+  ) +
+  ggplot2::geom_sf(
+    data = ne_countries,
+    color = "grey60",
+    size = 0.25
+  ) +
+  ggplot2::geom_sf(
+    data = ne_states,
+    color = "grey60",
+    size = 0.05
+  ) +
+  ggplot2::coord_sf(
+    crs = crs,
+    xlim = c(-80, -67),
+    ylim = c(30, 45)
+  ) +
+  ggthemes::theme_map()
+print(p1)
+```
+
+##### Figure `r i`. `r fig_info$caption[i]` {-}
+
+```{r}
+i <- i + 1
+```
+
+\newpage
+# ESP time series
+
+## Ecosystem Indicators
+
+### Distribution
+
+```{r, fig.height = 6, child = here::here("docs/fig-child.Rmd")}
+```
+
+\newpage
+```{r, fig.height = 6, child = here::here("docs/fig-child.Rmd")}
+```
+
+\newpage
+### Climate
+
+```{r, fig.height = 6, child = here::here("docs/fig-child.Rmd")}
+```
+
+\newpage
+```{r, fig.height = 6, child = here::here("docs/fig-child.Rmd")}
+```
+
+\newpage
+```{r, fig.height = 4, child = here::here("docs/fig-child.Rmd")}
+```
+
+\newpage
+### Natural mortality
+
+```{r, fig.height = 6, child = here::here("docs/fig-child.Rmd")}
+```
+
+\newpage
+```{r, fig.height = 7.5, child = here::here("docs/fig-child.Rmd")}
+```
+
+\newpage
+## Socioeconomic Indicators
+
+### Recreational
+
+```{r, fig.height = 7, child = here::here("docs/fig-child.Rmd")}
+```
+
+\newpage
+### Commercial
+
+```{r, child = here::here("docs/fig-child.Rmd")}
+```
+
+\newpage
+### Community
+
+```{r, fig.height = 6, child = here::here("docs/fig-child.Rmd")}
+```
+
+\newpage
+```{r, fig.height = 6, child = here::here("docs/fig-child.Rmd")}
+```
+
+\newpage
+# Tables 
+
+## Environmental data
+
+```{r, egg-summary}
+```
+
+
+```{r, larvae-summary}
+```
+
+\newpage
+```{r, small-summary}
+```
+
+
+```{r, medium-summary}
+```
+
+
+```{r, large-summary}
+```
+
+\newpage
+## Indicator summary table
+```{r}
+dat <- dplyr::full_join(params$data, order)
+```
+
+```{r}
+esp_traffic_tab(
+  data = dat %>%
+    dplyr::filter(INDICATOR_TYPE == "Ecosystem"),
+  year = 2017:2021
+) %>%
+  try()
+```
+
+\newpage
+```{r}
+esp_traffic_tab(
+  data = dat %>%
+    dplyr::filter(INDICATOR_TYPE == "Socioeconomic"),
+  year = 2017:2021
+) %>%
+  try()
+```
+
+\newpage
+## Indicator correlations
+
+```{r}
+conn <- read.csv(here::here("data-raw/Conn YOY.csv")) %>%
+  dplyr::select(Year, Index)
+
+bluefish <- NEesp::asmt %>%
+  dplyr::filter(
+    Species == "Bluefish",
+    Metric == "Recruitment" |
+      Metric == "Biomass",
+    AssessmentYear == 2019
+  ) %>%
+  dplyr::select(Year, Metric, Value) %>%
+  tidyr::pivot_wider(names_from = "Metric", values_from = "Value") %>%
+  dplyr::mutate(rssb = Recruitment / Biomass)
+
+bluefish <- bluefish %>%
+  dplyr::full_join(conn) %>%
+  dplyr::rename(
+    YEAR = Year,
+    Conn = Index
+  ) %>%
+  dplyr::mutate(conn_per_ssb = Conn / Biomass) %>%
+  dplyr::full_join(total_rec_catch %>%
+    dplyr::select(YEAR, DATA_VALUE) %>%
+    dplyr::rename(rec_catch = DATA_VALUE)) %>%
+  dplyr::full_join(comm_indicators %>%
+    dplyr::filter(INDICATOR_NAME == "Commercial_Bluefish_Landings_LBS") %>%
+    dplyr::select(YEAR, DATA_VALUE) %>%
+    dplyr::rename(com_catch = DATA_VALUE)) %>%
+  tidyr::pivot_longer(
+    cols = c(
+      "Recruitment", "rssb", "Conn", "conn_per_ssb", "Biomass",
+      "rec_catch", "com_catch"
+    ),
+    names_to = "Bluefish"
+  )
+```
+
+```{r}
+big_dat <- params$data %>%
+  dplyr::left_join(bluefish, by = "YEAR") %>%
+  dplyr::full_join(order) %>%
+  tidyr::drop_na(DATA_VALUE, value) %>%
+  dplyr::group_by(Bluefish, facet_label, CATEGORY, figure_number, indicator_order) %>%
+  dplyr::summarise(
+    cor = cor(DATA_VALUE, value),
+    pval = summary(lm(value ~ DATA_VALUE))$coefficients[2, 4],
+    info = paste(
+      "Correlation coefficient:", round(cor, digits = 3),
+      "\n",
+      "p-value:", round(pval, digits = 3)
+    )
+  ) %>%
+  dplyr::select(-cor, -pval) %>%
+  tidyr::pivot_wider(names_from = "Bluefish", values_from = "info")
+```
+
+### Ecosystem indicators and recruitment
+
+```{r}
+big_dat %>%
+  dplyr::filter(
+    CATEGORY == "Climate" |
+      CATEGORY == "Natural mortality",
+    stringr::str_detect(facet_label, "mako", negate = TRUE)
+  ) %>%
+  dplyr::arrange(figure_number, indicator_order) %>%
+  dplyr::ungroup() %>%
+  dplyr::select(CATEGORY, facet_label, Conn, conn_per_ssb, Recruitment, rssb) %>%
+  dplyr::rename(
+    `Conn Index` = Conn,
+    `Conn Index per SSB` = conn_per_ssb,
+    `Modeled recruitment (2019)` = Recruitment,
+    `Modeled recruits per SSB (2019)` = rssb,
+    Category = CATEGORY,
+    Indicator = facet_label
+  ) %>%
+  flextable::flextable(cwidth = 1)
+```
+
+\newpage
+### Ecosystem indicators and SSB
+
+```{r}
+big_dat %>%
+  dplyr::filter(CATEGORY == "Natural mortality") %>%
+  dplyr::arrange(figure_number, indicator_order) %>%
+  dplyr::ungroup() %>%
+  dplyr::select(CATEGORY, facet_label, Biomass) %>%
+  dplyr::rename(
+    Category = CATEGORY,
+    Indicator = facet_label,
+    `Modeled SSB (2019)` = Biomass,
+  ) %>%
+  flextable::flextable(cwidth = 2)
+```
+
+### Socioeconomic indicators and catch
+
+```{r}
+big_dat %>%
+  dplyr::filter(stringr::str_detect(facet_label, "fuel")) %>%
+  dplyr::ungroup() %>%
+  dplyr::select(CATEGORY, facet_label, rec_catch, com_catch) %>%
+  dplyr::rename(
+    Category = CATEGORY,
+    Indicator = facet_label,
+    `Recreational catch (n)` = rec_catch,
+    `Commercial landings (lbs)` = com_catch
+  ) %>%
+  flextable::flextable(cwidth = 1.5)
+```

@@ -1,0 +1,477 @@
+---
+title: "Bluefish in the NMFS bottom trawl"
+author: "Abigail Tyrell"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: true
+    number_sections: true
+    toc_depth: 3
+    toc_float:
+      collapsed: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+devtools::load_all()
+devtools::load_all(here::here("../bluefishLifeHistory"))
+`%>%` <- magrittr::`%>%`
+
+```
+
+## Tow date, latitude, longitude, and surface temperature vary by year
+```{r}
+dat <- bluefish_nmfs %>% 
+  dplyr::mutate(DOY = lubridate::yday(EST_TOWDATE),
+                size_group = ifelse(LENGTH <= 32.1,
+                                    "small (<=32.1cm)",
+                                    ifelse(LENGTH >= 49.6,
+                                           "large (>=49.6cm)",
+                                           "medium (31.2-49.6cm)"))) %>%
+  tidyr::drop_na(SURFTEMP) %>% 
+  dplyr::filter(SURFTEMP > 0,
+                SEASON == "FALL")#,
+                #DOY < 305) # don't include November
+
+dat %>% 
+  ggplot2::ggplot(ggplot2::aes(x = DOY, 
+                               y = SURFTEMP, 
+                               color = as.factor(YEAR))) + 
+  ggplot2::geom_point() + 
+  ggplot2::geom_smooth(method = "lm", se = FALSE) +
+  ggplot2::facet_wrap(~size_group, scales = "free")
+
+dat %>% 
+  ggplot2::ggplot(ggplot2::aes(x = DOY, 
+                               y = LAT, 
+                               color = as.factor(YEAR))) + 
+  ggplot2::geom_point() + 
+  ggplot2::geom_smooth(method = "lm", se = FALSE) +
+  ggplot2::facet_wrap(~size_group, scales = "free")
+
+dat %>% 
+  ggplot2::ggplot(ggplot2::aes(x = DOY, 
+                               y = LON, 
+                               color = as.factor(YEAR))) + 
+  ggplot2::geom_point() + 
+  ggplot2::geom_smooth(method = "lm", se = FALSE) +
+  ggplot2::facet_wrap(~size_group, scales = "free")
+```
+
+```{r}
+library(mgcv)
+correct_temp <- function(data, formula, gam_formula) {
+
+  print("glm")
+  model <- gam(as.formula(formula), 
+               data = data,
+               method = "REML")
+  par(mfrow = c(2,2))
+ # plot(model)
+  par(mfrow = c(1,1))
+  pred <- ggeffects::ggpredict(model, 
+                                terms = "YEAR",
+                                condition = c(NUMLEN = 1))
+  print(pred)
+
+  cat("\n\n")
+  # plot(pred) %>% print()
+  # cat("\n\n")
+  
+  print("gam")
+  model2 <- gam(as.formula(gam_formula), 
+            data = data,
+            method = "REML")
+  gam.check(model2)
+    par(mfrow = c(2,2))
+  plot(model2, all.terms = TRUE, rug = TRUE) %>%
+    try()
+  par(mfrow = c(1,1))
+  pred2 <- ggeffects::ggpredict(model2, 
+                                terms = "YEAR",
+                                condition = c(NUMLEN = 1))
+  print(pred2)
+  cat("\n\n")
+  # plot(pred2) %>% print()
+  # cat("\n\n")
+  
+  compare_data <- rbind(pred %>% dplyr::mutate(type = "GLM"),
+                        pred2 %>% dplyr::mutate(type = "GAM"))
+  
+  plt <- compare_data %>%
+    ggplot2::ggplot(ggplot2::aes(x = x %>%
+                                   as.character() %>%
+                                   as.numeric(),
+                                 y = predicted,
+                                 color = type,
+                                 group = type)) +
+    ggplot2::geom_line() +
+    ggplot2::geom_point() +
+    ggplot2::theme_bw()
+  
+  print(plt)
+  
+  # plot(pred$x, pred$predicted, type = "b")
+  # points(pred2$x, pred2$predicted, col = "red")
+  # lines(pred2$x, pred2$predicted, col = "red")
+  
+  AIC(model, model2)
+}
+
+dat <- bluefish_nmfs %>%
+  tidyr::drop_na(LENGTH, SURFTEMP) %>%
+  dplyr::mutate(size_group = ifelse(LENGTH <= 32.1,
+                                    "small (<=32.1cm)",
+                                    ifelse(LENGTH >= 49.6,
+                                           "large (>=49.6cm)",
+                                           "medium (31.2-49.6cm)")),
+                DOY = lubridate::yday(EST_TOWDATE)) %>%
+  tidyr::drop_na(SURFTEMP) %>%
+  dplyr::filter(SURFTEMP > 0,
+                SEASON == "FALL") %>%
+  dplyr::group_by(EST_TOWDATE,YEAR, SEASON, size_group, LAT, LON) %>%
+  dplyr::summarise(n_fish = sum(NUMLEN)) %>%
+  dplyr::ungroup()
+
+## check for normality, outliers
+
+par(mfrow = c(1,2))
+
+boxplot(dat$DOY)
+hist(dat$DOY)
+
+boxplot(dat$LAT)
+hist(dat$LAT)
+
+boxplot(dat$LON)
+hist(dat$LON)
+
+boxplot(dat$SURFTEMP)
+hist(dat$SURFTEMP)
+
+par(mfrow = c(1,1))
+
+# remove outlier LAT > 44
+# dat <- dat %>%
+#   dplyr::filter(LAT < 44)
+
+# # add zeros
+all_tows <- all_nmfs %>%
+  tidyr::drop_na(SURFTEMP) %>%
+  dplyr::filter(SEASON == "FALL",
+                SURFTEMP > 0) %>% 
+  dplyr::select(SEASON, EST_TOWDATE, LAT, LON, SURFTEMP, YEAR) %>%
+  dplyr::mutate(size_group = "no fish",
+                n_fish = 0,
+                DOY = lubridate::yday(EST_TOWDATE))
+
+zeros <- dplyr::anti_join(all_tows, dat, by = "EST_TOWDATE") 
+
+full_bluefish <- dplyr::full_join(zeros, dat) %>%
+  dplyr::select(SEASON, EST_TOWDATE, LAT, LON, SURFTEMP, YEAR, size_group, n_fish, DOY) %>%
+  dplyr::group_by(YEAR, SEASON, size_group) %>%
+  dplyr::mutate(annual_group_fish = sum(n_fish),
+                annual_group_event = dplyr::n()) %>%
+  dplyr::ungroup() %>%
+   dplyr::group_by(YEAR) %>%
+   dplyr::mutate(lat_range = max(LAT) - min(LAT),
+                 annual_all_fish = sum(annual_group_fish),
+                 annual_all_event = sum(annual_group_event)) %>%
+   dplyr::filter(lat_range > 6,
+                 annual_all_fish > 0)
+
+hurdle_model <- gam(list(n_fish ~ s(LAT) + s(LON) + te(LAT, LON, k = 7) + DOY + SURFTEMP*as.factor(YEAR) + size_group,
+          ~ DOY + SURFTEMP*as.factor(YEAR)),
+          data = full_bluefish,
+          family = ziplss)
+summary(hurdle_model)
+
+
+
+# model_dat <- dat %>%
+#                    dplyr::filter(size_group == "small (<=32.1cm)") %>%
+#   dplyr::full_join(zeros) %>%
+#   dplyr::select(SURFTEMP, LAT, LON, YEAR, DOY, NUMLEN)
+
+# correct_temp(data = model_dat,
+#              formula = "SURFTEMP ~ LAT*LON + DOY + NUMLEN*as.factor(YEAR)",
+#              gam_formula = "SURFTEMP ~ s(LAT) + s(LON) + te(LAT, LON, k = 7) + DOY + NUMLEN*as.factor(YEAR)")
+
+# correct_temp(data = model_dat,
+#              formula = "NUMLEN ~ LAT*LON + SURFTEMP*DOY + as.factor(YEAR)*DOY + NUMLEN",
+#              gam_formula = "NUMLEN ~  s(LAT) + s(LON) + te(LAT, LON, k = 7) + s(SURFTEMP) + te(SURFTEMP, DOY, k = 7) + as.factor(YEAR)*DOY")
+
+small <- dat %>% 
+  dplyr::filter(size_group == "small (<=32.1cm)") %>%
+  dplyr::full_join(zeros) %>%
+  dplyr::select(SURFTEMP, LAT, LON, YEAR, DOY, NUMLEN) %>%
+   dplyr::group_by(YEAR) %>%
+   dplyr::mutate(lat_range = max(LAT) - min(LAT),
+                 n_fish = sum(NUMLEN)) %>%
+   dplyr::filter(lat_range > 6,
+                 n_fish > 0)
+medium <- dat %>% 
+  dplyr::filter(size_group == "medium (31.2-49.6cm)") %>%
+  dplyr::full_join(zeros) %>%
+  dplyr::select(SURFTEMP, LAT, LON, YEAR, DOY, NUMLEN) %>%
+   dplyr::group_by(YEAR) %>%
+   dplyr::mutate(lat_range = max(LAT) - min(LAT),
+                 n_fish = sum(NUMLEN)) %>%
+   dplyr::filter(lat_range > 6,
+                 n_fish > 0)
+large <- dat %>% 
+  dplyr::filter(size_group == "large (>=49.6cm)") %>%
+  dplyr::full_join(zeros) %>%
+  dplyr::select(SURFTEMP, LAT, LON, YEAR, DOY, NUMLEN) %>%
+   dplyr::group_by(YEAR) %>%
+   dplyr::mutate(lat_range = max(LAT) - min(LAT),
+                 n_fish = sum(NUMLEN)) %>%
+   dplyr::filter(lat_range > 6,
+                 n_fish > 0)
+```
+
+## Surface temperature
+
+Try to account for annual variation in latitude, longitude, and day of year when looking at how surface temperature preferences change over time
+
+### Small bluefish
+```{r}
+correct_temp(data = small,
+             formula = "SURFTEMP ~ LAT*LON + DOY + NUMLEN*as.factor(YEAR)",
+             gam_formula = "SURFTEMP ~ s(LAT) + s(LON) + te(LAT, LON, k = 7) + DOY + NUMLEN*as.factor(YEAR)")
+```
+
+### Medium bluefish
+```{r}
+correct_temp(data = medium,
+             formula = "SURFTEMP ~ LAT*LON + DOY + NUMLEN*as.factor(YEAR)",
+             gam_formula = "SURFTEMP ~ s(LAT) + s(LON) + te(LAT, LON, k = 7) + DOY + NUMLEN*as.factor(YEAR)")
+```
+
+### Large bluefish
+```{r}
+correct_temp(data = large,
+             formula = "SURFTEMP ~ LAT*LON + DOY + NUMLEN*as.factor(YEAR)",
+             gam_formula = "SURFTEMP ~ s(LAT) + s(LON) + te(LAT, LON, k = 7) + DOY + NUMLEN*as.factor(YEAR)")
+```
+
+## Latitude
+
+Try to account for annual variation in longitude and day of year when looking at how latitude preferences change over time
+
+### Small bluefish
+```{r}
+correct_temp(data = small,
+             formula = "LAT ~ LON + NUMLEN*as.factor(YEAR)",
+             gam_formula = "LAT ~ s(LON) + NUMLEN*as.factor(YEAR)")
+```
+
+### Medium bluefish
+```{r}
+correct_temp(data = medium,
+             formula = "LAT ~ LON + NUMLEN*as.factor(YEAR)",
+             gam_formula = "LAT ~ s(LON) + NUMLEN*as.factor(YEAR)")
+```
+
+### Large bluefish
+```{r}
+correct_temp(data = large,
+             formula = "LAT ~ LON + NUMLEN*as.factor(YEAR)",
+             gam_formula = "LAT ~ s(LON) + NUMLEN*as.factor(YEAR)")
+```
+
+## Longitude
+
+Try to account for annual variation in latitude and day of year when looking at how longitude preferences change over time
+
+### Small bluefish
+```{r}
+correct_temp(data = small,
+             formula = "LON ~ LAT + as.factor(YEAR)*NUMLEN",
+             gam_formula = "LON ~ s(LAT) + as.factor(YEAR)*NUMLEN")
+```
+
+### Medium bluefish
+```{r}
+correct_temp(data = medium,
+             formula = "LON ~ LAT + as.factor(YEAR)*NUMLEN",
+             gam_formula = "LON ~ s(LAT) + as.factor(YEAR)*NUMLEN")
+```
+
+### Large bluefish
+```{r}
+correct_temp(data = large,
+             formula = "LON ~ LAT + as.factor(YEAR)*NUMLEN",
+             gam_formula = "LON ~ s(LAT) + as.factor(YEAR)*NUMLEN")
+```
+
+## ESP figures
+
+### Small bluefish
+
+```{r, echo = FALSE, fig.height = 3, message = FALSE}
+## small fish
+small %>%
+  gam(formula = SURFTEMP ~ s(LAT) + s(LON) + te(LAT, LON, k = 7) + DOY + NUMLEN*as.factor(YEAR), 
+      family = gaussian()) %>%
+  ggeffects::ggpredict(terms = "YEAR", 
+                       condition = c(NUMLEN = 1)) %>%
+  tibble::as_tibble() %>%
+  dplyr::select(x, predicted) %>%
+  dplyr::rename(YEAR = x,
+                DATA_VALUE = predicted) %>%
+  dplyr::mutate(INDICATOR_NAME = "fall temperature, small (<=31.2cm)",
+                YEAR = YEAR %>%
+                  as.character() %>%
+                  as.numeric()) %>%
+  bluefishESP::esp_traffic_fig(status = FALSE,
+                               out = "one_pager")
+```
+
+```{r, echo = FALSE, fig.height = 3, message = FALSE}
+small %>%
+  gam(formula = LAT ~ s(LON) + as.factor(YEAR)*NUMLEN, 
+      family = gaussian()) %>%
+  ggeffects::ggpredict(terms = "YEAR", 
+                       condition = c(NUMLEN = 1)) %>%
+  tibble::as_tibble() %>%
+  dplyr::select(x, predicted) %>%
+  dplyr::rename(YEAR = x,
+                DATA_VALUE = predicted) %>%
+  dplyr::mutate(INDICATOR_NAME = "fall latitude, small (<=31.2cm)",
+                YEAR = YEAR %>%
+                  as.character() %>%
+                  as.numeric()) %>%
+  bluefishESP::esp_traffic_fig(status = FALSE,
+                               out = "one_pager")
+```
+
+```{r, echo = FALSE, fig.height = 3, message = FALSE}
+small %>%
+  gam(formula = LON ~ s(LAT) + as.factor(YEAR)*NUMLEN, 
+      family = gaussian()) %>%
+  ggeffects::ggpredict(terms = "YEAR", 
+                       condition = c(NUMLEN = 1)) %>%
+  tibble::as_tibble() %>%
+  dplyr::select(x, predicted) %>%
+  dplyr::rename(YEAR = x,
+                DATA_VALUE = predicted) %>%
+  dplyr::mutate(INDICATOR_NAME = "fall longitude, small (<=31.2cm)",
+                YEAR = YEAR %>%
+                  as.character() %>%
+                  as.numeric()) %>%
+  bluefishESP::esp_traffic_fig(status = FALSE,
+                               out = "one_pager")
+```
+
+### Medium bluefish
+```{r, echo = FALSE, fig.height = 3, message = FALSE}
+medium %>%
+  gam(formula = SURFTEMP ~ s(LAT) + s(LON) + te(LAT, LON, k = 7) + DOY + NUMLEN*as.factor(YEAR), 
+      family = gaussian()) %>%
+  ggeffects::ggpredict(terms = "YEAR", 
+                       condition = c(NUMLEN = 1)) %>%
+  tibble::as_tibble() %>%
+  dplyr::select(x, predicted) %>%
+  dplyr::rename(YEAR = x,
+                DATA_VALUE = predicted) %>%
+  dplyr::mutate(INDICATOR_NAME = "fall temperature, medium (31.2-49.6cm)",
+                YEAR = YEAR %>%
+                  as.character() %>%
+                  as.numeric()) %>%
+  bluefishESP::esp_traffic_fig(status = FALSE,
+                               out = "one_pager")
+```
+
+```{r, echo = FALSE, fig.height = 3, message = FALSE}
+medium %>%
+  gam(formula = LAT ~ s(LON) + as.factor(YEAR)*NUMLEN, 
+      family = gaussian()) %>%
+  ggeffects::ggpredict(terms = "YEAR", 
+                       condition = c(NUMLEN = 1)) %>%
+  tibble::as_tibble() %>%
+  dplyr::select(x, predicted) %>%
+  dplyr::rename(YEAR = x,
+                DATA_VALUE = predicted) %>%
+  dplyr::mutate(INDICATOR_NAME = "fall latitude, medium (31.2-49.6cm)",
+                YEAR = YEAR %>%
+                  as.character() %>%
+                  as.numeric()) %>%
+  bluefishESP::esp_traffic_fig(status = FALSE,
+                               out = "one_pager")
+```
+
+```{r, echo = FALSE, fig.height = 3, message = FALSE}
+medium %>%
+  gam(formula = LON ~ s(LAT) + as.factor(YEAR)*NUMLEN, 
+      family = gaussian()) %>%
+  ggeffects::ggpredict(terms = "YEAR", 
+                       condition = c(NUMLEN = 1)) %>%
+  tibble::as_tibble() %>%
+  dplyr::select(x, predicted) %>%
+  dplyr::rename(YEAR = x,
+                DATA_VALUE = predicted) %>%
+  dplyr::mutate(INDICATOR_NAME = "fall longitude, medium (31.2-49.6cm)",
+                YEAR = YEAR %>%
+                  as.character() %>%
+                  as.numeric()) %>%
+  bluefishESP::esp_traffic_fig(status = FALSE,
+                               out = "one_pager")
+```
+
+### Large bluefish
+```{r, echo = FALSE, fig.height = 3, message = FALSE}
+## large fish
+large %>%
+  gam(formula = SURFTEMP ~ s(LAT) + s(LON) + te(LAT, LON, k = 7) + DOY + NUMLEN*as.factor(YEAR), 
+      family = gaussian()) %>%
+  ggeffects::ggpredict(terms = "YEAR", 
+                       condition = c(NUMLEN = 1)) %>%
+  tibble::as_tibble() %>%
+  dplyr::select(x, predicted) %>%
+  dplyr::rename(YEAR = x,
+                DATA_VALUE = predicted) %>%
+  dplyr::mutate(INDICATOR_NAME = "fall temperature, large (>=49.6cm)",
+                YEAR = YEAR %>%
+                  as.character() %>%
+                  as.numeric()) %>%
+  bluefishESP::esp_traffic_fig(status = FALSE,
+                               out = "one_pager")
+```
+
+```{r, echo = FALSE, fig.height = 3, message = FALSE}
+large %>%
+  gam(formula = LAT ~ s(LON) + as.factor(YEAR)*NUMLEN, 
+      family = gaussian()) %>%
+  ggeffects::ggpredict(terms = "YEAR", 
+                       condition = c(NUMLEN = 1)) %>%
+  tibble::as_tibble() %>%
+  dplyr::select(x, predicted) %>%
+  dplyr::rename(YEAR = x,
+                DATA_VALUE = predicted) %>%
+  dplyr::mutate(INDICATOR_NAME = "fall latitude, large (>=49.6cm)",
+                YEAR = YEAR %>%
+                  as.character() %>%
+                  as.numeric()) %>%
+  bluefishESP::esp_traffic_fig(status = FALSE,
+                               out = "one_pager")
+```
+
+```{r, echo = FALSE, fig.height = 3, message = FALSE}
+large %>%
+  gam(formula = LON ~ s(LAT) + as.factor(YEAR)*NUMLEN, 
+      family = gaussian()) %>%
+  ggeffects::ggpredict(terms = "YEAR", 
+                       condition = c(NUMLEN = 1)) %>%
+  tibble::as_tibble() %>%
+  dplyr::select(x, predicted) %>%
+  dplyr::rename(YEAR = x,
+                DATA_VALUE = predicted) %>%
+  dplyr::mutate(INDICATOR_NAME = "fall longitude, large (>=49.6cm)",
+                YEAR = YEAR %>%
+                  as.character() %>%
+                  as.numeric()) %>%
+  bluefishESP::esp_traffic_fig(status = FALSE,
+                               out = "one_pager")
+```
