@@ -10,7 +10,17 @@ Folders and files in this repository:
 - `data`: Stored R package data. Automatically created and updated by the {usethis} package.
 - `data-raw` folder:
   - `old` folder: Data and scripts not used in the final ESP.
-    - `2009-2019 Rec Scores_ME_MS_031522 cw.xlsx`: Community reliance and engagement data provided by Changhua Weng.
+  - `scripts` folder:
+    - `create_mrip_keys.R`: Create keys data objects to translate MRIP abbreviations.
+    - `create_references.R`: Compile references from a spreadsheet into a .bib file
+    - `Econ_Indicator_CODE_github.R`: Create commercial indicators from database queries.
+    - `pull_MRIP_data.R`: Pull MRIP catch and effort data from noaa.gov.
+    - `pull_nmfs_bottom_trawl.R`: Pull NMFS bottom trawl data from Oracle database.
+  - `MRIP_data` folder: MRIP catch and effort data downloaded from noaa.gov.
+  - `MRIP_directed_trips` folder: MRIP directed trips data downloaded from noaa.gov.
+  - `VAST` folder: Copies of VAST scripts, data, and figures. Importantly, relative file paths in the code have not been updated.
+  - files:
+    - `2009-2019 Rec Scores_ME_MS_031522 cw.xlsx`: Community reliance and engagement data provided by Changhua Weng. [available upon request]
     - `american-fisheries-society.csl`: Citation Style Language file for formatting references.
     - `bluefish ESP figure information.csv`: Caption and alt text information for the images in the ESP document (captions may have been edited in the full document after initial compiling with this spreadsheet).
     - `bluefish_references.csv`: References.
@@ -21,7 +31,8 @@ Folders and files in this repository:
     - `indicator_key.csv`: Order information to link figures and captions/alt text.
     - `NEAMAP Table.xlsx`: NEAMAP bluefish diet information, not used in report but preserved for potential future use.     
     - `references.bib`: References.
-    - `references.txt`: References.                                            
+    - `references.txt`: References.       
+    - `SMA2017_Bratio.xlsx` [kindly provided by ICCAT; available upon request from ICCAT] 
     - `SOCIEOECONOMIC_COMMERCIAL_INDICATORS_FINAL_2020Constantdols.csv`: Commercial socioeconomic indicators provided by Samantha Werner.
     - `SOCIEOECONOMIC_COMMERCIAL_INDICATORS_FINAL_2020Constantdols.xls`: Commercial socioeconomic indicators provided by Samantha Werner.
     - `Standardized_CPUE_StatexWave.csv`: Standardized bluefish CPUE data provided by Katie Drew.
@@ -30,15 +41,6 @@ Folders and files in this repository:
     - `Unstdz_CPUE_StatexWave.csv``: Unstandardized bluefish CPUE data provided by Katie Drew.
     - `uwnd.10m.mon.mean.nc`: Monthly wind data downloaded from the Physical Sciences Laboratory.
     - `vwnd.10m.mon.mean.nc`: Monthly wind data downloaded from the Physical Sciences Laboratory.
-  - `scripts` folder:
-    - `create_mrip_keys.R`: Create keys data objects to translate MRIP abbreviations.
-    - `create_references.R`: Compile references from a spreadsheet into a .bib file
-    - `Econ_Indicator_CODE_github.R`: Create commercial indicators from database queries.
-    - `pull_MRIP_data.R`: Pull MRIP catch and effort data from noaa.gov.
-    - `pull_nmfs_bottom_trawl.R`: Pull NMFS bottom trawl data from Oracle database.
-  - `MRIP_data` folder: MRIP catch and effort data downloaded from noaa.gov.
-  - `MRIP_directed_trips` folder: MRIP directed trips data downloaded from noaa.gov.
-  - `VAST` folder: Copies of VAST scripts, data, and figures. Importantly, relative file paths in the code have not been updated.
 - `docs` folder: 
   - `indicator_figs.Rmd` and `indicator_figs.docx`: Rmarkdown file creates single Word document containing ESP data visualizations.
   - `length-fig-child.Rmd`: Child document supporting `indicator_figs.Rmd`.
@@ -49,5 +51,3 @@ Folders and files in this repository:
 - `images` folder: Images provided for the ESP report, and images created for the peer review presentation.
 - `man` folder: Automatically created and updated by the {usethis} package.
 - `R` folder: Functions created and used for data processing, analysis, and visualization.
-
-The only file not included in this repo is `data-raw/SMA2017_Bratio.xlsx`, which was kindly provided by ICCAT and therefore we do not wish to be a secondary distributor of this file. 
