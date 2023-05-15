@@ -1,0 +1,842 @@
+# Things that have been removed to save space
+
+# Additional figures
+
+
+## Annual state catches
+
+```{r, eval = TRUE}
+state_rec_catch <- params$mrip_catch %>%
+  dplyr::group_by(year, st_f) %>%
+  dplyr::summarise(DATA_VALUE = sum(tot_cat, na.rm = TRUE)) %>%
+    dplyr::ungroup() %>%
+  dplyr::mutate(name = paste(st_f, "_recreational_catch_n", sep = " \n ")) %>%
+  dplyr::rename(YEAR = year) %>%
+  dplyr::group_by(name) %>%
+  dplyr::mutate(mean = mean(DATA_VALUE, na.rm = TRUE),
+                sd = sd (DATA_VALUE, na.rm = TRUE),
+                YEAR = as.numeric(YEAR)) %>%
+  dplyr::ungroup()
+
+state_rec_catch$name <- factor(state_rec_catch$name,
+                               levels = paste(c("MAINE", "NEW HAMPSHIRE",
+                                                "MASSACHUSETTS", "RHODE ISLAND",
+                                                "CONNECTICUT", "NEW YORK",
+                                                "NEW JERSEY", "DELAWARE",
+                                                "MARYLAND", "VIRGINIA",
+                                                "NORTH CAROLINA", "SOUTH CAROLINA",
+                                                "GEORGIA", "FLORIDA"), 
+                                              "_recreational_catch_n", 
+                                              sep = " \n "))
+```
+
+#### Northeast 
+```{r}
+state_rec_catch %>%
+  dplyr::filter(st_f %in% c("MAINE", "NEW HAMPSHIRE",
+                                                "MASSACHUSETTS", "RHODE ISLAND",
+                                                "CONNECTICUT")) %>%
+  dplyr::rename(INDICATOR_NAME = name) %>%
+  esp_traffic_fig(status = FALSE) %>% 
+  try()
+```
+
+#### Mid Atlantic
+```{r}
+state_rec_catch %>%
+  dplyr::filter(st_f %in% c("NEW YORK",
+                            "NEW JERSEY", "DELAWARE",
+                            "MARYLAND", "VIRGINIA")) %>%
+  dplyr::rename(INDICATOR_NAME = name) %>%
+  esp_traffic_fig(status = FALSE) %>% 
+  try()
+```
+
+#### Southeast
+```{r}
+state_rec_catch %>%
+  dplyr::filter(st_f %in% c("NORTH CAROLINA", "SOUTH CAROLINA",
+                            "GEORGIA", "FLORIDA")) %>%
+  dplyr::rename(INDICATOR_NAME = name) %>%
+  esp_traffic_fig(status = FALSE) %>% 
+  try()
+```
+
+
+```{r, eval = FALSE}
+plt1 <- data %>%
+  dplyr::filter(wave_f != "JAN/FEB") %>%
+  ggplot2::ggplot(ggplot2::aes(x = st_f,
+                               y = mean_prop_coast_catch,
+                               fill = mean_state_catch)) +
+  ggplot2::geom_col(color = "black") +
+  ggplot2::coord_flip() +
+  ggplot2::facet_wrap(~wave_f,
+                      ncol = 1
+           ) +
+  ggplot2::theme_bw() +
+  viridis::scale_fill_viridis(name = "Mean fish caught\n(number)") +
+  ggplot2::xlab(ggplot2::element_blank()) +
+  ggplot2::ylab("Mean proportion of coastwide catch") +
+  ggplot2::theme(aspect.ratio = 0.5,
+                 axis.text.y = ggplot2::element_text(size = 8))
+
+plt2 <- data %>%
+  dplyr::filter(wave_f != "JAN/FEB") %>%
+  ggplot2::ggplot(ggplot2::aes(x = st_f,
+                               y = unstandardized_CPUE,
+                               fill = mean_state_catch)) +
+  ggplot2::geom_col(color = "black") +
+  ggplot2::coord_flip() +
+  ggplot2::facet_wrap(~wave_f,
+                      ncol = 1
+           ) +
+  ggplot2::theme_bw() +
+  viridis::scale_fill_viridis(name = "Mean fish caught\n(number)") +
+  ggplot2::xlab(ggplot2::element_blank()) +
+  ggplot2::ylab("Unstandardized CPUE") +
+  ggplot2::theme(axis.text.y = ggplot2::element_blank(),
+                 aspect.ratio = 0.5)
+
+plt3 <- data %>%
+  dplyr::filter(wave_f != "JAN/FEB") %>%
+  ggplot2::ggplot(ggplot2::aes(x = st_f,
+                               y = standardized_CPUE,
+                               fill = mean_state_catch)) +
+   ggplot2::geom_col(ggplot2::aes(y = ),
+                     color = "black") +
+  ggplot2::coord_flip() +
+  ggplot2::facet_wrap(~wave_f,
+                      ncol = 1
+           ) +
+  ggplot2::theme_bw() +
+  viridis::scale_fill_viridis(name = "Mean fish caught\n(number)") +
+  ggplot2::xlab(ggplot2::element_blank()) +
+  ggplot2::ylab("Standardized CPUE") +
+  ggplot2::theme(axis.text.y = ggplot2::element_blank(),
+                 aspect.ratio = 0.5)
+
+ggpubr::ggarrange(plt1, plt2, plt3, 
+                  ncol = 3,
+                  common.legend = TRUE,
+                  legend = "bottom",
+                  widths = c(1.1, 1, 1),
+                  heights = 1)
+```
+
+### Commercial correlations with bluefish stock
+```{r, fig.height = 3}
+bluefish <- params$data %>%
+  dplyr::filter(INDICATOR_NAME == "Commercial_Bluefish_Landings_LBS") %>%
+  dplyr::select(YEAR, DATA_VALUE) %>%
+  dplyr::rename(Comm_landings = DATA_VALUE)
+
+fuel <- params$data %>%
+  dplyr::filter(INDICATOR_NAME == "AVG_ANNUAL_DIESEL_FUEL_PRICE_REAL_DOLLARS") %>%
+  dplyr::select(YEAR, DATA_VALUE) %>%
+  dplyr::rename(Fuel_price = DATA_VALUE)
+
+dplyr::full_join(bluefish, fuel, by = "YEAR") %>%
+  tidyr::drop_na(Comm_landings, Fuel_price) %>%
+  plot_corr(x = "Fuel_price",
+          y = "Comm_landings",
+          title = "Commercial landings vs fuel")
+```
+
+### Recreational correlations with bluefish stock
+```{r, fig.height = 3}
+# catch
+params$data %>%
+  dplyr::filter(INDICATOR_NAME == "total_recreational_catch_n") %>%
+  dplyr::select(YEAR, DATA_VALUE) %>% 
+    dplyr::rename(Rec_catch = DATA_VALUE) %>%
+  dplyr::full_join(fuel, by = "YEAR") %>%
+  tidyr::drop_na(Rec_catch, Fuel_price) %>%
+  plot_corr(x = "Fuel_price",
+          y = "Rec_catch",
+          title = "Recreational catch vs fuel")
+cat("\n\n")
+
+# landings
+params$data %>%
+  dplyr::filter(INDICATOR_NAME == "total_recreational_landings_lbs") %>%
+  dplyr::select(YEAR, DATA_VALUE) %>%
+  dplyr::rename(Rec_landings = DATA_VALUE) %>%
+  dplyr::full_join(fuel, by = "YEAR") %>%
+  tidyr::drop_na(Rec_landings, Fuel_price) %>%
+  plot_corr(x = "Fuel_price",
+          y = "Rec_landings",
+          title = "Recreational landings vs fuel")
+cat("\n\n")
+
+# trips
+params$data %>%
+  dplyr::filter(INDICATOR_NAME == "Bluefish_trips") %>%
+  dplyr::select(YEAR, DATA_VALUE) %>%
+  dplyr::rename(Rec_trips = DATA_VALUE) %>%
+  dplyr::full_join(fuel, by = "YEAR") %>%
+  tidyr::drop_na(Rec_trips, Fuel_price) %>%
+  plot_corr(x = "Fuel_price",
+          y = "Rec_trips",
+          title = "Recreational trips vs fuel")
+cat("\n\n")
+```
+
+### Climate correlations with bluefish stock
+
+#### Correlation plots
+```{r, fig.height = 3}
+bluefish <- NEesp::asmt %>%
+  dplyr::filter(Species == "Bluefish",
+                Metric == "Recruitment" |
+                  Metric == "Biomass",
+                AssessmentYear == 2019) %>%
+  dplyr::select(Year, Metric, Value) %>%
+  tidyr::pivot_wider(names_from = "Metric", values_from = "Value") %>%
+  dplyr::mutate(rssb = Recruitment/Biomass) %>%
+  dplyr::rename(YEAR = Year) %>%
+  dplyr::select(YEAR, rssb)
+
+for(i in c("first_18c_day", "last_18c_day", "n_18c_day", "july_proportion_22c",
+           "crossshore_wind", "longshore_wind"
+)){
+  params$data %>%
+  dplyr::filter(INDICATOR_NAME == i) %>%
+  dplyr::full_join(bluefish, by = "YEAR") %>%
+  tidyr::drop_na(rssb, DATA_VALUE) %>%
+  plot_corr(x = "DATA_VALUE",
+          y = "rssb",
+          title = paste("Bluefish Recruitment per SSB (metric ton) vs", i)) %>%
+    print()
+cat("\n\n")
+           }
+```
+
+#### GLM
+```{r, eval = FALSE}
+ssb <- NEesp::asmt %>%
+  dplyr::filter(Species == "Bluefish",
+                Metric == "Recruitment",
+                AssessmentYear == 2019) %>%
+  dplyr::rename(Bluefish_SSB = Value,
+                YEAR = Year) %>%
+  dplyr::select(YEAR, Bluefish_SSB)
+
+climate_data <- params$data %>%
+  dplyr::filter(INDICATOR_NAME %in% c("first_18_day", "last_18_day", "n_18_day", "july_proportion",
+           "crossshore_wind_April", "crossshore_wind_May", 
+           "longshore_wind_April", "longshore_wind_May"
+))  %>%
+  tidyr::pivot_wider(names_from = "INDICATOR_NAME", values_from = "DATA_VALUE") %>%
+  dplyr::full_join(bluefish) %>%
+  dplyr::full_join(ssb) %>%
+  tidyr::drop_na()
+
+mod0 <- glm(Bluefish_Recruitment ~ 1,
+            data = climate_data,
+            family = "poisson")
+mod0b <- glmmTMB::glmmTMB(Bluefish_Recruitment ~ 1,
+            data = climate_data,
+            family = glmmTMB::nbinom1())
+
+# MASS::stepAIC(mod0,
+#               scope = list(upper = ~ crossshore_wind_April_North + crossshore_wind_May_North + crossshore_wind_April_South + crossshore_wind_May_South + longshore_wind_April_North + longshore_wind_May_North + longshore_wind_April_South + longshore_wind_May_South + first_18_day + last_18_day + n_18_day + july_proportion + Bluefish_SSB),
+#               direction = "forward",
+#               trace = -1) %>%
+#   invisible()
+
+mod <- glm(Bluefish_Recruitment ~ crossshore_wind_April + crossshore_wind_May + + longshore_wind_April + longshore_wind_May + first_18c_day + last_18c_day + n_18c_day + july_propotion_22C + Bluefish_SSB,
+            data = climate_data,
+            family = "poisson")
+modb <- glmmTMB::glmmTMB(Bluefish_Recruitment ~ crossshore_wind_April + crossshore_wind_May + + longshore_wind_April + longshore_wind_May + first_18c_day + last_18c_day + n_18c_day + july_propotion_22C + Bluefish_SSB,
+            data = climate_data,
+            family = glmmTMB::nbinom1())
+
+AIC(mod0, mod0b, mod, modb)
+```
+
+```{r, results = "markup", eval = FALSE}
+summary(mod)
+```
+
+```{r, fig.height = 6, eval = FALSE}
+plot(climate_data$YEAR, climate_data$Bluefish_Recruitment, type = "b")
+
+mod_prediction <- exp(predict(mod))
+
+lines(climate_data$YEAR, mod_prediction, col = "red")
+```
+
+Probably has too many degrees of freedom
+
+### Mortality correlations with blufish stock
+```{r, fig.height = 3}
+# mako
+bluefish <- NEesp::asmt %>%
+  dplyr::filter(Species == "Bluefish",
+                Metric == "Biomass",
+                AssessmentYear == 2019) %>%
+  dplyr::rename(DATA_VALUE = Value,
+                YEAR = Year) %>%
+  dplyr::select(YEAR, DATA_VALUE) %>%
+  dplyr::rename(Bluefish_SSB = DATA_VALUE)
+
+params$data %>%
+  dplyr::filter(INDICATOR_NAME == "mako_avg_bbmsy") %>%
+  dplyr::full_join(bluefish, by = "YEAR") %>%
+  tidyr::drop_na(Bluefish_SSB, DATA_VALUE) %>%
+    dplyr::rename(Mako_BBmsy = DATA_VALUE) %>%
+  plot_corr(x = "Mako_BBmsy",
+          y = "Bluefish_SSB",
+          title = "Bluefish SSB vs Mako shark B/Bmsy")
+
+# condition
+for(i in c(
+  # condition indicator names
+)){
+  params$data %>%
+  dplyr::filter(INDICATOR_NAME == i) %>%
+  dplyr::full_join(bluefish, by = "YEAR") %>%
+  tidyr::drop_na(Bluefish_Recruitment, DATA_VALUE) %>%
+  plot_corr(x = "DATA_VALUE",
+          y = "Bluefish_SSB",
+          title = paste("Bluefish SSB vs", i)) %>%
+    print()
+cat("\n\n")
+}
+```
+
+## NEAMAP geography
+#### Histogram
+```{r, fig.height = 12, eval = FALSE}
+neamap <- read.csv(here::here("data-raw/dont-share/State Data Sets 2021/")) %>%
+    dplyr::mutate(size_group = ifelse(is.na(LENGTH), "unknown",
+                                      ifelse(LENGTH <= 35, "small (<=35cm)", "large (>35cm)")),
+                  size_class = floor(LENGTH/10) * 10,
+                month = format(EST_TOWDATE, "%m"),
+                Decade = floor(YEAR/10) * 10) 
+
+fig <- nmfs %>%
+  ggplot2::ggplot(ggplot2::aes(x = LAT,
+                               fill = as.factor(size_class)
+                              # fill = size_group
+                               )) +
+  ggplot2::geom_histogram(color = "black",
+                          binwidth = 1#,
+                    # position = ggplot2::position_dodge()
+                     ) +
+  ggplot2::facet_wrap(~month,
+                      ncol = 2,
+                      #rows = ggplot2::vars(month),
+                      #cols = ggplot2::vars(Decade),
+                      scales = "free_y") +
+  ggplot2::theme_bw()
+
+print(fig)
+```
+
+#### Map
+```{r, fig.height = 20, fig.width = 8, eval = FALSE}
+ggplot2::ggplot(nmfs %>% 
+                  dplyr::group_by(YEAR, month, size_group, LAT, LON) %>%
+                  dplyr::summarise(n_fish = sum(NUMLEN)),
+                       ggplot2::aes(
+                         x = LON,
+                         y = LAT)) +
+  ggplot2::geom_point(ggplot2::aes(size = n_fish,
+                      fill = as.factor(size_group)),
+                      pch = 21) +
+  ggplot2::geom_sf(data = rnaturalearth::ne_countries(scale = "medium", 
+                                                      returnclass = "sf"),
+                   inherit.aes = FALSE) +
+  ggplot2::coord_sf(
+    xlim = c(min(nmfs$LON) - 1, max(nmfs$LON) + 1),
+    ylim = c(min(nmfs$LAT) - 1, max(nmfs$LAT) + 1)
+  ) +
+  ggplot2::xlab("Longitude") +
+  ggplot2::ylab("Latitude") +
+  ggplot2::facet_grid(cols = ggplot2::vars(size_group),
+                      rows = ggplot2::vars(month)) +
+  ggplot2::theme_bw() +
+  ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90),
+                 legend.position = "top")
+```
+
+
+## NEFSC bottom trawl
+
+### Bluefish latitude
+20 days only
+```{r, fig.height = 4}
+params$data %>%
+  dplyr::filter(stringr::str_detect(INDICATOR_NAME, "lat")) %>%
+  dplyr::mutate(SEASON = ifelse(stringr::str_detect(INDICATOR_NAME, "FALL"),
+                                 "FALL", "SPRING"),
+                size_group = ifelse(stringr::str_detect(INDICATOR_NAME, ">35cm"),
+                                 "large (>35cm)", "small (<=35cm)"),
+                statistic = ifelse(stringr::str_detect(INDICATOR_NAME, "max"),
+                                 "max",
+                              ifelse(stringr::str_detect(INDICATOR_NAME, "min"),
+                                 "min", "mean"))
+                ) %>%
+  ggplot2::ggplot(ggplot2::aes(x = YEAR,
+                               y = DATA_VALUE,
+                               color = statistic)) +
+  ggplot2::geom_line() +
+  ggplot2::geom_point() +
+  ggplot2::geom_smooth(method = "lm", se = FALSE
+  ) +
+  ggplot2::facet_grid(cols = ggplot2::vars(size_group), 
+                      rows = ggplot2::vars(paste(SEASON))) +
+  ggplot2::theme_bw()
+```
+
+### Bluefish temperature
+20 days only
+```{r, fig.height = 4}
+params$data %>%
+  dplyr::filter(stringr::str_detect(INDICATOR_NAME, "temp")) %>%
+  dplyr::mutate(SEASON = ifelse(stringr::str_detect(INDICATOR_NAME, "FALL"),
+                                 "FALL", "SPRING"),
+                size_group = ifelse(stringr::str_detect(INDICATOR_NAME, ">35cm"),
+                                 "large (>35cm)", "small (<=35cm)"),
+                statistic = ifelse(stringr::str_detect(INDICATOR_NAME, "max"),
+                                 "max",
+                              ifelse(stringr::str_detect(INDICATOR_NAME, "min"),
+                                 "min", "mean"))
+                ) %>%
+  ggplot2::ggplot(ggplot2::aes(x = YEAR,
+                               y = DATA_VALUE,
+                               color = statistic)) +
+  ggplot2::geom_line() +
+  ggplot2::geom_point() +
+  ggplot2::geom_smooth(method = "lm", se = FALSE
+  ) +
+  ggplot2::facet_grid(cols = ggplot2::vars(size_group), 
+                      rows = ggplot2::vars(paste(SEASON))) +
+  ggplot2::theme_bw() 
+```
+
+### Weekly data
+All weeks with more than 9 samples
+```{r, warning = FALSE}
+dat <- params$bluefish_nmfs %>%
+  tidyr::drop_na(LENGTH) %>%
+  dplyr::mutate(size_class = trunc(LENGTH/10) * 10,
+                size_group = ifelse(LENGTH <= 35, "small (<=35cm)", "large (>35cm)"),
+                month = format(EST_TOWDATE, "%m"),
+                week = lubridate::week(EST_TOWDATE)) %>%
+  dplyr::group_by(YEAR, week, size_group) %>%
+  dplyr::summarise(min_lat = min(LAT, na.rm = TRUE),
+                   max_lat = max(LAT, na.rm = TRUE),
+                   n_sample_events = sum(!is.na(LAT)),
+                   weighted_mean_lat = mean(rep(LAT, NUMLEN), na.rm = TRUE),
+                   min_temp = min(SURFTEMP, na.rm = TRUE),
+                   max_temp = max(SURFTEMP, na.rm = TRUE),
+                   weighted_mean_temp = mean(rep(SURFTEMP, NUMLEN), na.rm = TRUE)) %>%
+  dplyr::filter(n_sample_events > 5) %>%
+  tidyr::pivot_longer(cols = c("min_lat", "max_lat", "weighted_mean_lat",
+                               "min_temp", "max_temp", "weighted_mean_temp")) %>%
+  dplyr::mutate(INDICATOR_NAME = paste(week, size_group, name)) %>%
+  dplyr::ungroup() %>%
+  dplyr::group_by(INDICATOR_NAME) %>%
+  dplyr::filter(dplyr::n() > 9)
+
+
+fig <- dat %>%
+    dplyr::filter(stringr::str_detect(name, "lat")) %>%
+  ggplot2::ggplot(ggplot2::aes(x = YEAR,
+                               y = value,
+                               color = name)) +
+  ggplot2::geom_line() +
+  ggplot2::geom_point() +
+  ggplot2::geom_smooth(method = "lm", se = FALSE
+  ) +
+  ggplot2::facet_grid(cols = ggplot2::vars(size_group), 
+                      rows = ggplot2::vars(week)) +
+  ggplot2::theme_bw() +
+  ggplot2::theme(legend.position = "top")
+
+  print(fig)
+  
+    fig <- dat %>%
+    dplyr::filter(stringr::str_detect(name, "temp")) %>%
+  ggplot2::ggplot(ggplot2::aes(x = YEAR,
+                               y = value,
+                               color = name)) +
+  ggplot2::geom_line() +
+  ggplot2::geom_point() +
+  ggplot2::geom_smooth(method = "lm", se = FALSE
+  ) +
+  ggplot2::facet_grid(cols = ggplot2::vars(size_group), 
+                      rows = ggplot2::vars(week)) +
+  ggplot2::theme_bw() +
+  ggplot2::theme(legend.position = "top")
+
+  print(fig)
+```
+
+#### Histogram
+```{r, fig.height = 10}
+nmfs <- params$bluefish_nmfs %>%
+    dplyr::mutate(size_group = ifelse(is.na(LENGTH), "unknown",
+                                      ifelse(LENGTH <= 35, "small (<=35cm)", "large (>35cm)")),
+                  size_class = floor(LENGTH/10) * 10,
+                month = format(EST_TOWDATE, "%m"),
+                Decade = floor(YEAR/10) * 10) 
+
+fig <- nmfs %>%
+  ggplot2::ggplot(ggplot2::aes(x = LAT,
+                               fill = as.factor(size_group)
+                              # fill = size_group
+                               )) +
+  ggplot2::geom_histogram(color = "black",
+                          binwidth = 1#,
+                    # position = ggplot2::position_dodge()
+                     ) +
+  ggplot2::facet_wrap(~month,
+                      ncol = 2,
+                      #rows = ggplot2::vars(month),
+                      #cols = ggplot2::vars(Decade),
+                      scales = "free_y") +
+  ggplot2::theme_bw() +
+  ggplot2::theme(legend.position = "top")
+
+print(fig)
+```
+
+#### Map
+```{r, fig.height = 20, fig.width = 8}
+ggplot2::ggplot(nmfs %>% 
+                  dplyr::group_by(YEAR, month, size_group, LAT, LON) %>%
+                  dplyr::summarise(n_fish = sum(NUMLEN)),
+                       ggplot2::aes(
+                         x = LON,
+                         y = LAT)) +
+  ggplot2::geom_point(ggplot2::aes(size = n_fish,
+                      fill = as.factor(size_group)),
+                      pch = 21) +
+  ggplot2::geom_sf(data = rnaturalearth::ne_countries(scale = "medium", 
+                                                      returnclass = "sf"),
+                   inherit.aes = FALSE) +
+  ggplot2::coord_sf(
+    xlim = c(min(nmfs$LON) - 1, max(nmfs$LON) + 1),
+    ylim = c(min(nmfs$LAT) - 1, max(nmfs$LAT) + 1)
+  ) +
+  ggplot2::xlab("Longitude") +
+  ggplot2::ylab("Latitude") +
+  ggplot2::facet_grid(cols = ggplot2::vars(size_group),
+                      rows = ggplot2::vars(month)) +
+  ggplot2::theme_bw() +
+  ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90),
+                 legend.position = "top")
+```
+
+## Recreational catch
+
+#### By wave
+```{r}
+state_wave <- params$mrip_catch %>%
+  dplyr::group_by(year, st_f, wave_f) %>%
+  dplyr::summarise(DATA_VALUE = sum(tot_cat, na.rm = TRUE)) %>%
+  dplyr::mutate(name = paste0(st_f, "\nrecreational_catch_n\n", wave_f)) %>%
+  dplyr::rename(YEAR = year) %>%
+  dplyr::ungroup() %>%
+  dplyr::group_by(name) %>%
+  dplyr::mutate(mean = mean(DATA_VALUE, na.rm = TRUE),
+                sd = sd (DATA_VALUE, na.rm = TRUE),
+                YEAR = as.numeric(YEAR))
+
+for(i in c("JAN/FEB", "MAR/APR", "MAY/JUN", "JUL/AUG", "SEP/OCT", "NOV/DEC")){
+  message(i)
+  
+  this_data <- state_wave %>%
+    dplyr::filter(wave_f == i,
+                  !st_f %in% c("ALABAMA", "LOUISIANA", "MISSISSIPPI")) %>%
+    dplyr::ungroup() %>%
+    dplyr::group_by(st_f) %>%
+    dplyr::mutate(n_years = dplyr::n()) %>%
+    dplyr::filter(n_years > 2)
+  
+  
+  this_data$name <- factor(this_data$name,
+                               levels = paste0(c("MAINE", "NEW HAMPSHIRE",
+                                                "MASSACHUSETTS", "RHODE ISLAND",
+                                                "CONNECTICUT", "NEW YORK",
+                                                "NEW JERSEY", "DELAWARE",
+                                                "MARYLAND", "VIRGINIA",
+                                                "NORTH CAROLINA", "SOUTH CAROLINA",
+                                                "GEORGIA", "FLORIDA"), 
+                                               "\nrecreational_catch_n\n",
+                                               i))
+ fig <- this_data %>%
+   dplyr::rename(INDICATOR_NAME = name) %>%
+  esp_traffic_fig(paginate = TRUE,
+                  status = FALSE,
+                  ncolumn = 2)
+  
+  print(fig)
+}
+```
+
+## Landings per trip 
+
+#### By wave
+```{r}
+# set up data
+cpue <- dplyr::full_join(wave_catch,
+                         wave_trips,
+                         by = c("wave_f", "st_f", "year")) %>%
+  dplyr::group_by(st_f, year, wave_f) %>%
+  dplyr::summarise(wave_catch = sum(state_catch_n, na.rm = TRUE),
+                   wave_land = sum(state_land_lbs, na.rm = TRUE),
+                   wave_trips = sum(trips, na.rm = TRUE)) %>%
+  dplyr::mutate(n_per_trip = wave_catch/wave_trips,
+                lbs_per_trip = wave_land/wave_trips) %>%
+  dplyr::select(-c(wave_catch, wave_land, wave_trips)) %>%
+  tidyr::pivot_longer(cols = c("n_per_trip", "lbs_per_trip")) %>%
+  dplyr::mutate(name = paste(st_f, wave_f, name, sep = " \n ")) %>%
+  dplyr::rename(YEAR = year, 
+                DATA_VALUE = value) %>%
+  dplyr::ungroup() # %>%
+  # dplyr::group_by(name) %>%
+  # dplyr::mutate(mean = mean(DATA_VALUE, na.rm = TRUE),
+  #               sd = sd (DATA_VALUE, na.rm = TRUE),
+  #               YEAR = as.numeric(YEAR))
+```
+
+##### Catch per trip
+```{r}
+# loop over wave
+for(i in c("JAN/FEB", "MAR/APR", "MAY/JUN", "JUL/AUG", "SEP/OCT", "NOV/DEC")){
+  message(i)
+  
+  this_data <- cpue %>%
+    dplyr::filter(wave_f == i,
+                  stringr::str_detect(name, "n_per_trip"),
+                  !is.na(DATA_VALUE)) %>%
+    dplyr::ungroup() %>%
+    dplyr::group_by(st_f) %>%
+    dplyr::mutate(n_years = dplyr::n()) %>%
+    dplyr::filter(n_years > 2)
+
+  this_data$name <- factor(this_data$name,
+                          levels = 
+                            paste(
+                              c("MAINE", "NEW HAMPSHIRE", "MASSACHUSETTS",
+                                     "RHODE ISLAND", "CONNECTICUT", "NEW YORK",
+                                     "NEW JERSEY", "DELAWARE", "MARYLAND",
+                                     "VIRGINIA", "NORTH CAROLINA", "SOUTH CAROLINA",
+                                     "GEORGIA", "FLORIDA"), 
+                              "\n",
+                              i, 
+                              "\n",
+                              "n_per_trip"
+                              ))
+ fig <- this_data %>%
+   dplyr::rename(INDICATOR_NAME = name) %>%
+  esp_traffic_fig(paginate = TRUE,
+                  status = FALSE,
+                  silent = TRUE)
+  
+  print(fig)
+}
+```
+
+##### Landings per trip
+```{r}
+# loop over wave
+for(i in c("JAN/FEB", "MAR/APR", "MAY/JUN", "JUL/AUG", "SEP/OCT", "NOV/DEC")){
+  message(i)
+  
+  this_data <- cpue %>%
+    dplyr::filter(wave_f == i,
+                  stringr::str_detect(name, "lbs_per_trip"),
+                  !is.na(DATA_VALUE)) %>%
+    dplyr::ungroup() %>%
+    dplyr::group_by(st_f) %>%
+    dplyr::mutate(n_years = dplyr::n()) %>%
+    dplyr::filter(n_years > 2)
+
+  this_data$name <- factor(this_data$name,
+                          levels = 
+                            paste(
+                              c("MAINE", "NEW HAMPSHIRE", "MASSACHUSETTS",
+                                     "RHODE ISLAND", "CONNECTICUT", "NEW YORK",
+                                     "NEW JERSEY", "DELAWARE", "MARYLAND",
+                                     "VIRGINIA", "NORTH CAROLINA", "SOUTH CAROLINA",
+                                     "GEORGIA", "FLORIDA"), 
+                             "\n",
+                              i, 
+                              "\n",
+                            "lbs_per_trip"))
+ fig <- this_data %>%
+      dplyr::rename(INDICATOR_NAME = name) %>%
+  esp_traffic_fig(paginate = TRUE,
+                  status = FALSE,
+                  silent = TRUE)
+  
+  print(fig)
+}
+```
+
+## MRIP CPUE and LPUE
+
+### Bluefish distribution
+
+#### Catch per trip
+```{r, mrippue}
+wave_catch <- params$mrip_catch %>%
+  dplyr::group_by(wave_f, st_f, year) %>%
+  dplyr::summarise(state_catch_n = sum(tot_cat, na.rm = TRUE),
+                state_land_lbs = sum(wgt_ab1, na.rm = TRUE)) %>%
+  dplyr::filter(!st_f %in% c("ALABAMA", "LOUISIANA", "MISSISSIPPI")) %>%
+  dplyr::ungroup() %>%
+  dplyr::mutate(year = as.numeric(year))
+
+# directed trips by state-wave
+bluefish_directed_trips <- c()
+  for (i in params$trip_files) {
+    this_dat <- read.csv(i,
+      skip = 24,
+      na.strings = "."
+    )
+    message(unique(this_dat$Year)) # make sure all years are downloaded
+    bluefish_directed_trips <- rbind(bluefish_directed_trips, this_dat)
+  }
+
+wave_trips <- bluefish_directed_trips %>%
+  dplyr::rename(wave_f = Wave, st_f = State, year = Year) %>%
+    dplyr::group_by(wave_f, st_f, year) %>%
+  dplyr::summarise(trips = sum(Directed.Trips, na.rm = TRUE)) %>%
+  dplyr::filter(!st_f %in% c("ALABAMA", "LOUISIANA", "MISSISSIPPI")) %>%
+  dplyr::ungroup() %>%
+  dplyr::mutate(wave_f = wave_f %>%
+                  stringr::str_replace("JANUARY", "JAN") %>%
+                  stringr::str_replace("FEBRUARY", "FEB") %>%
+                  stringr::str_replace("MARCH", "MAR") %>%
+                  stringr::str_replace("APRIL", "APR") %>%
+                  stringr::str_replace("MAY", "MAY") %>%
+                  stringr::str_replace("JUNE", "JUN") %>%
+                  stringr::str_replace("JULY", "JUL") %>%
+                  stringr::str_replace("AUGUST", "AUG") %>%
+                  stringr::str_replace("SEPTEMBER", "SEP") %>%
+                  stringr::str_replace("OCTOBER", "OCT") %>%
+                  stringr::str_replace("NOVEMBER", "NOV") %>%
+                  stringr::str_replace("DECEMBER", "DEC"))
+
+cpue <- dplyr::full_join(wave_catch,
+                         wave_trips,
+                         by = c("wave_f", "st_f", "year")) %>%
+  dplyr::mutate(n_per_trip = state_catch_n/trips,
+                lbs_per_trip = state_land_lbs/trips) %>%
+  dplyr::group_by(wave_f, st_f) %>%
+  dplyr::summarise(mean_catch_pue = mean(n_per_trip, na.rm = TRUE),
+                   mean_land_pue = mean(lbs_per_trip, na.rm = TRUE))
+
+cpue$st_f <- factor(cpue$st_f,
+                          levels = rev(c("MAINE", "NEW HAMPSHIRE", "MASSACHUSETTS",
+                                     "RHODE ISLAND", "CONNECTICUT", "NEW YORK",
+                                     "NEW JERSEY", "DELAWARE", "MARYLAND",
+                                     "VIRGINIA", "NORTH CAROLINA", "SOUTH CAROLINA",
+                                     "GEORGIA", "FLORIDA")))
+cpue$wave_f <- factor(cpue$wave_f,
+                            levels = c("JAN/FEB", "MAR/APR", "MAY/JUN",
+                                       "JUL/AUG", "SEP/OCT", "NOV/DEC"))
+cpue %>%
+    dplyr::filter(wave_f != "JAN/FEB") %>%
+  ggplot2::ggplot(ggplot2::aes(x = st_f,
+                               y = mean_catch_pue,
+                               fill = st_f)) +
+  ggplot2::geom_col(color = "black") +
+    ggplot2::coord_flip() +
+  ggplot2::facet_wrap(~wave_f,
+                      ncol = 2
+           ) +
+  ggplot2::theme_bw() +
+  ggplot2::theme(legend.position = "none") +
+  ggplot2::ylab("Catch (n) per trip")
+```
+
+#### Landings per trip
+```{r}
+cpue %>%
+    dplyr::filter(wave_f != "JAN/FEB") %>%
+  ggplot2::ggplot(ggplot2::aes(x = st_f,
+                               y = mean_land_pue,
+                               fill = st_f)) +
+  ggplot2::geom_col(color = "black") +
+    ggplot2::coord_flip() +
+  ggplot2::facet_wrap(~wave_f,
+                      ncol = 2
+           ) +
+  ggplot2::theme_bw() +
+  ggplot2::theme(legend.position = "none") +
+  ggplot2::ylab("Landings (lb) per trip")
+```
+
+### Annual state CPUE and LPUE
+ 
+```{r}
+cpue <- dplyr::full_join(wave_catch,
+                         wave_trips,
+                         by = c("wave_f", "st_f", "year")) %>%
+  dplyr::group_by(st_f, year) %>%
+  dplyr::summarise(annual_catch = sum(state_catch_n, na.rm = TRUE),
+                   annual_land = sum(state_land_lbs, na.rm = TRUE),
+                   annual_trips = sum(trips, na.rm = TRUE)) %>%
+  dplyr::mutate(n_per_trip = annual_catch/annual_trips,
+                lbs_per_trip = annual_land/annual_trips) %>%
+  dplyr::select(-c(annual_catch, annual_land, annual_trips)) %>%
+  tidyr::pivot_longer(cols = c("n_per_trip", "lbs_per_trip")) %>%
+  dplyr::mutate(name = paste(st_f, name, sep = " \n ")) %>%
+  dplyr::rename(YEAR = year,
+                DATA_VALUE = value) %>%
+  dplyr::ungroup() %>%
+  # dplyr::group_by(name) %>%
+  dplyr::mutate(#mean = mean(DATA_VALUE, na.rm = TRUE),
+               # sd = sd (DATA_VALUE, na.rm = TRUE),
+                YEAR = as.numeric(YEAR))
+
+cpue$name <- factor(cpue$name,
+                          levels = 
+                            c(paste(
+                              c("MAINE", "NEW HAMPSHIRE", "MASSACHUSETTS",
+                                     "RHODE ISLAND", "CONNECTICUT", "NEW YORK",
+                                     "NEW JERSEY", "DELAWARE", "MARYLAND",
+                                     "VIRGINIA", "NORTH CAROLINA", "SOUTH CAROLINA",
+                                     "GEORGIA", "FLORIDA"),
+                              "\n", "n_per_trip"
+                              ),
+                            paste(
+                              c("MAINE", "NEW HAMPSHIRE", "MASSACHUSETTS",
+                                     "RHODE ISLAND", "CONNECTICUT", "NEW YORK",
+                                     "NEW JERSEY", "DELAWARE", "MARYLAND",
+                                     "VIRGINIA", "NORTH CAROLINA", "SOUTH CAROLINA",
+                                     "GEORGIA", "FLORIDA"),
+                            "\n", "lbs_per_trip")))
+
+```
+
+#### Catch per trip
+```{r}
+cpue %>%
+  dplyr::filter(stringr::str_detect(name, "n_per_trip")) %>%
+     dplyr::rename(INDICATOR_NAME = name) %>%
+  esp_traffic_fig(paginate = TRUE,
+                  status = FALSE,
+                  silent = TRUE,
+                  ncolumn = 2) %>% try()
+```
+
+#### Landings per trip
+```{r}
+cpue %>%
+  dplyr::filter(stringr::str_detect(name, "lbs_per_trip")) %>%
+     dplyr::rename(INDICATOR_NAME = name) %>%
+  esp_traffic_fig(paginate = TRUE,
+                  status = FALSE,
+                  silent = TRUE,
+                  ncolumn = 2)
+```
+

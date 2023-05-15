@@ -1,0 +1,37 @@
+INDICATOR_TYPE,CATEGORY,INDICATOR_NAME,facet_label,indicator_order,figure_number
+Ecosystem,Distribution,small northings,"Fall center of gravity of small (<=30.3cm) bluefish (northings, km)",1,47
+Ecosystem,Distribution,small eastings,Fall center of gravity of small (<=30.3cm) bluefish (eastings km),1,48
+Ecosystem,Distribution,medium northings,"Fall center of gravity of medium (30.3-50.0cm) bluefish (northings, km)",2,47
+Ecosystem,Distribution,medium eastings,Fall center of gravity of medium (30.3-50.0cm) bluefish (eastings km),2,48
+Ecosystem,Distribution,large northings,"Fall center of gravity of large (>=50.0cm) bluefish (northings, km)",3,47
+Ecosystem,Distribution,large eastings,Fall center of gravity of large (>=50.0cm) bluefish (eastings km),3,48
+Ecosystem,Climate,first_18c_day,First day of the year when the mean temperature of the central Atlantic region is warmer than 18C,1,49
+Ecosystem,Climate,last_18c_day,Last day of the year when the mean temperature of the central Atlantic region is warmer than 18C,2,49
+Ecosystem,Climate,n_18c_day,Number of days when at least 75% of the central Atlantic region is warmer than 18C,3,49
+Ecosystem,Climate,july_proportion_under_18C,Proportion of the central Atlantic colder than 18C in July,1,50
+Ecosystem,Climate,july_proportion_18-25.6C,Proportion of the central Atlantic between 18-25.6C in July,2,50
+Ecosystem,Climate,july_proportion_over_25.6C,Proportion of the central Atlantic warmer than 25.6C in July,3,50
+Ecosystem,Climate,crossshore_wind,Mean crossshore wind in the central Atlantic in April and May,1,51
+Ecosystem,Climate,longshore_wind,Mean alongshore wind in the central Atlantic in April and May,2,51
+Ecosystem,Natural mortality,large (>=50.0cm) spring condition,Spring condition of large (>=50.0cm) bluefish,3,52
+Ecosystem,Natural mortality,large (>=50.0cm) fall condition,Fall condition of large (>=50.0cm) bluefish,3,53
+Ecosystem,Natural mortality,medium (30.3-50.0cm) spring condition,Spring condition of medium (30.3-50.0cm) bluefish,2,52
+Ecosystem,Natural mortality,medium (30.3-50.0cm) fall condition,Fall condition of medium (30.3-50.0cm) bluefish,2,53
+Ecosystem,Natural mortality,small (<=30.3cm) spring condition,Spring condition of small (<=30.3cm) bluefish,1,52
+Ecosystem,Natural mortality,small (<=30.3cm) fall condition,Fall condition of small (<=30.3cm) bluefish,1,53
+Ecosystem,Natural mortality,mako_avg_bbmsy,Shortfin mako shark B/Bmsy in the North Atlantic,4,53
+Socioeconomic,Recreational,Bluefish_trips,Total recreational bluefish trips (n),1,54
+Socioeconomic,Recreational,proportion_bluefish_trips,Proportion of recreational trips targeting bluefish,2,54
+Socioeconomic,Recreational,total_recreational_catch_n,Total recreational catch (n),3,54
+Socioeconomic,Recreational,total_recreational_landings_lbs,Total recreational landings (lbs),4,54
+Socioeconomic,Commercial,N_Commercial_Vessels_Landing_Bluefish,Commercial vessels landing bluefish (n),1,55
+Socioeconomic,Commercial,Commercial_Bluefish_Landings_LBS,Total commercial bluefish landings (lbs),2,55
+Socioeconomic,Commercial,AVG_BLUEFISH_PRICE_REAL_DOLLARS/lb,Average price of bluefish (real dollars/lb),3,55
+Socioeconomic,Commercial,TOTAL_ANNUAL_BLUEFISH_REVENUE_REAL_DOLLARS,Total bluefish revenue (real dollars),4,55
+Socioeconomic,Commercial,AVG_ANNUAL_DIESEL_FUEL_PRICE_REAL_DOLLARS,Average price of diesel fuel (real dollars/gallon),5,55
+Socioeconomic,Community,regional_mean_eng Northeast,Mean recreational fishing engagement in the Northeast,1,56
+Socioeconomic,Community,regional_mean_eng Mid Atlantic,Mean recreational fishing engagement in the Mid Atlantic,2,56
+Socioeconomic,Community,regional_mean_eng Southeast,Mean recreational fishing engagement in the Southeast,3,56
+Socioeconomic,Community,regional_mean_rel Northeast,Mean recreational fishing reliance in the Northeast,1,57
+Socioeconomic,Community,regional_mean_rel Mid Atlantic,Mean recreational fishing reliance in the Mid Atlantic,2,57
+Socioeconomic,Community,regional_mean_rel Southeast,Mean recreational fishing reliance in the Southeast,3,57
